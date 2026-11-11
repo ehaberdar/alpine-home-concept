@@ -145,6 +145,14 @@ a:hover { text-decoration-color: var(--enzian); }
 .brand { display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none; margin-right: auto; }
 .brand svg { width: 1.6rem; height: 1.6rem; color: var(--contour); flex: none; }
 .brand-name { font-stretch: var(--wide); font-weight: 600; font-size: 0.9375rem; letter-spacing: 0.005em; white-space: nowrap; }
+/* Very small phones (<= 384px): narrower brand + tighter toggle so long
+   labels like "Schliessen" never push the header past the screen edge. */
+@media (max-width: 24rem) {
+  .site-header .brand-name { font-stretch: 100%; font-size: 0.8125rem; }
+  .site-header .header-inner { gap: 0.5rem; }
+  .site-header .brand { gap: 0.45rem; min-width: 0; }
+  .site-header .menu-toggle { padding-inline: 0.6rem; }
+}
 .nav-list { display: flex; gap: 1.75rem; }
 .nav-list a { text-decoration: none; font-weight: 500; font-size: 0.9375rem; padding-block: 0.4rem; border-bottom: 1px solid transparent; }
 .nav-list a:hover, .nav-list a[aria-current="page"] { border-bottom-color: currentColor; }
