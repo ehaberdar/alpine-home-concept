@@ -7,7 +7,7 @@
    page "jump" from English to their language.
 
    Safety: English visitors and visitors without JavaScript are not affected,
-   and after 3 seconds the texts are shown in any case.
+   and after 1.5 seconds the texts are shown in any case.
    The language rule here must stay the same as detectLang() in app.js
    (tests/audit.js checks the language list).
    ========================================================================= */
@@ -31,5 +31,5 @@
   if (pick === "en") return;
   root.lang = pick;
   root.classList.add("i18n-pending");
-  window.setTimeout(function () { root.classList.remove("i18n-pending"); }, 3000);
+  window.setTimeout(function () { root.classList.remove("i18n-pending"); }, 1500);
 })();

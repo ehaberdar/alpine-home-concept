@@ -212,6 +212,7 @@ a:hover { text-decoration-color: var(--enzian); }
 @media (max-width: 52rem) {
   .footer-brand { grid-column: 1 / -1; }
   .footer-col { grid-column: span 6; }
+  .footer-col:last-child { grid-column: 1 / -1; }   /* contact column full width: the e-mail address fits on one line */
 }
 
 /* 8. HOME SECTIONS ---------------------------------------------------------- */
