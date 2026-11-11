@@ -70,17 +70,23 @@ def parse_price(raw, where):
 
 
 def fetch_csv(sheet_id):
-    url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv&gid=0"
-    req = urllib.request.Request(url, headers={"User-Agent": "ahc-prices-bot"})
-    try:
-        with urllib.request.urlopen(req, timeout=30) as r:
-            body = r.read().decode("utf-8-sig")
-            ctype = r.headers.get("Content-Type", "")
-    except Exception as e:  # noqa: BLE001
-        return None, f"could not download the sheet ({e})"
-    if "text/csv" not in ctype or body.lstrip().startswith("<"):
-        return None, "the sheet is not shared as 'Anyone with the link: Viewer'"
-    return body, None
+    """Download the first tab of the sheet as CSV. Tries the export link first,
+    then the gviz link (both work for 'Anyone with the link: Viewer')."""
+    base = f"https://docs.google.com/spreadsheets/d/{sheet_id}"
+    errors = []
+    for url in (base + "/export?format=csv", base + "/gviz/tq?tqx=out:csv&headers=1"):
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 ahc-prices-bot"})
+        try:
+            with urllib.request.urlopen(req, timeout=30) as r:
+                body = r.read().decode("utf-8-sig")
+                ctype = r.headers.get("Content-Type", "")
+        except Exception as e:  # noqa: BLE001
+            errors.append(f"{url.split(sheet_id)[1]}: {e}")
+            continue
+        if "csv" in ctype and not body.lstrip().startswith("<"):
+            return body, None
+        errors.append(f"{url.split(sheet_id)[1]}: not CSV ({ctype})")
+    return None, "could not read the sheet (is it shared 'Anyone with the link: Viewer'?) " + "; ".join(errors)
 
 
 def build(rows, catalogue, previous):
