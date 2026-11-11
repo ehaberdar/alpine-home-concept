@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <!-- ===== HEAD: same block on every page (security, fonts, styles) ===== -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; connect-src 'self'; form-action 'self' mailto:; base-uri 'self'; object-src 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Mentions légales · Alpine Home Concept</title>
+  <meta name="description" content="Tables basses sculpturales, tables à manger et miroirs fabriqués à la main, sélectionnés et livrés depuis Belp, en Suisse.">
+  <meta name="theme-color" content="#ecede8">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body data-page="legal">
+  <a class="skip-link" href="#main" data-i18n="skip">Aller au contenu</a>
+  <header id="site-header" class="site-header"></header>
+
+  <main id="main">
+    <div class="wrap page-head">
+      <h1 class="display" data-i18n="legal.title">Mentions légales</h1>
+    </div>
+    <div class="wrap grid prose-grid">
+      <div class="prose-main">
+        <!-- ===== IMPRESSUM: company data from data/config.js ===== -->
+        <h2 class="h3" data-i18n="legal.imprint">Impressum</h2>
+        <p id="imprint"></p>
+        <!-- ===== PRIVACY ===== -->
+        <h2 class="h3" data-i18n="legal.privacy">Protection des données</h2>
+        <p data-i18n="legal.privacy.1"></p>
+        <p data-i18n="legal.privacy.2"></p>
+        <p data-i18n="legal.privacy.3"></p>
+        <p data-i18n="legal.privacy.4"></p>
+        <!-- ===== TERMS OF SALE ===== -->
+        <h2 class="h3" data-i18n="legal.terms">Conditions de vente</h2>
+        <p data-i18n="legal.terms.1"></p>
+        <p data-i18n="legal.terms.2"></p>
+        <p data-i18n="legal.terms.3"></p>
+      </div>
+    </div>
+  </main>
+
+  <footer id="site-footer" class="site-footer"></footer>
+
+  <!-- ===== SCRIPTS: settings, data, texts, then the site logic ===== -->
+  <script src="data/config.js"></script>
+  <script src="data/products.js"></script>
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

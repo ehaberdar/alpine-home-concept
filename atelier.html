@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <!-- ===== HEAD: same block on every page (security, fonts, styles) ===== -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; connect-src 'self'; form-action 'self' mailto:; base-uri 'self'; object-src 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Atelier · Alpine Home Concept</title>
+  <meta name="description" content="Tables basses sculpturales, tables à manger et miroirs fabriqués à la main, sélectionnés et livrés depuis Belp, en Suisse.">
+  <meta name="theme-color" content="#ecede8">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body data-page="atelier">
+  <a class="skip-link" href="#main" data-i18n="skip">Aller au contenu</a>
+  <header id="site-header" class="site-header"></header>
+
+  <main id="main">
+    <div class="wrap page-head">
+      <h1 class="display" data-i18n="atelier.title">Atelier</h1>
+      <p class="lead measure" data-i18n="atelier.lead"></p>
+    </div>
+
+    <!-- ===== WIDE PHOTO ===== -->
+    <figure class="wrap wide-figure">
+      <img src="img/site/dining-wide-1600.webp" srcset="img/site/dining-wide-800.webp 800w, img/site/dining-wide-1600.webp 1600w"
+           sizes="100vw" width="1600" height="893" alt="" decoding="async">
+    </figure>
+
+    <!-- ===== BELP / İNEGÖL / IN BETWEEN ===== -->
+    <section class="section">
+      <div class="wrap trio">
+        <div><h2 class="h3" data-i18n="atelier.belp.title"></h2><p data-i18n="atelier.belp.text"></p></div>
+        <div><h2 class="h3" data-i18n="atelier.inegol.title"></h2><p data-i18n="atelier.inegol.text"></p></div>
+        <div><h2 class="h3" data-i18n="atelier.control.title"></h2><p data-i18n="atelier.control.text"></p></div>
+      </div>
+    </section>
+
+    <!-- ===== WORKSHOP SHOWROOM + TEAM ===== -->
+    <section class="section">
+      <div class="wrap grid split">
+        <figure class="split-media">
+          <img src="img/site/workshop-800.webp" srcset="img/site/workshop-800.webp 800w, img/site/workshop-1600.webp 1600w"
+               sizes="(max-width: 52rem) 100vw, 50vw" width="800" height="600" alt="" loading="lazy" decoding="async">
+        </figure>
+        <div class="split-text">
+          <h2 class="h2" data-i18n="atelier.team">L'équipe</h2>
+          <div class="team">
+            <div><h3 class="h3" data-i18n="team.cihan">Cihan Yilmaz</h3><p data-i18n="team.cihan.role"></p></div>
+            <div><h3 class="h3" data-i18n="team.ilknur">İlknur Yilmaz</h3><p data-i18n="team.ilknur.role"></p></div>
+          </div>
+          <p class="small mirror-note"><a id="mirror-link" class="text-link" href="#" target="_blank" rel="noopener noreferrer" data-i18n="atelier.mirror"></a></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer" class="site-footer"></footer>
+
+  <!-- ===== SCRIPTS: settings, data, texts, then the site logic ===== -->
+  <script src="data/config.js"></script>
+  <script src="data/products.js"></script>
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
