@@ -14,7 +14,7 @@ window.AHC_CONFIG = {
   address: null,   // TODO: street, 3123 Belp
   uid: null,       // TODO: CHE-xxx.xxx.xxx, if registered
 
-  defaultLang: "fr",
-  languages: ["fr", "de", "en"],
+  defaultLang: "en",            // used when the browser language is not one of the four
+  languages: ["en", "de", "fr", "tr"],   // order = order of the language switch
   currency: "CHF"
 };

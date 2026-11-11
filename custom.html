@@ -1,80 +1,80 @@
 <!doctype html>
-<html lang="fr">
+<html lang="en">
 <head>
   <!-- ===== HEAD: same block on every page (security, fonts, styles) ===== -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; connect-src 'self'; form-action 'self' mailto:; base-uri 'self'; object-src 'none'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <title>Sur mesure · Alpine Home Concept</title>
-  <meta name="description" content="Tables basses sculpturales, tables à manger et miroirs fabriqués à la main, sélectionnés et livrés depuis Belp, en Suisse.">
+  <title>Made to measure · Alpine Home Concept</title>
+  <meta name="description" content="Sculptural coffee tables, dining tables and mirrors, handmade, selected and delivered from Belp, Switzerland.">
   <meta name="theme-color" content="#ecede8">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preload" href="assets/fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body data-page="custom">
-  <a class="skip-link" href="#main" data-i18n="skip">Aller au contenu</a>
+  <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
   <header id="site-header" class="site-header"></header>
 
   <main id="main">
     <div class="wrap page-head">
-      <h1 class="display" data-i18n="custom.title">Sur mesure</h1>
-      <p class="lead measure" data-i18n="custom.lead"></p>
+      <h1 class="display" data-i18n="custom.title">Made to measure</h1>
+      <p class="lead measure" data-i18n="custom.lead">A table a little longer, higher or in another tone? Most models can be adapted.</p>
     </div>
 
     <div class="wrap grid prose-grid">
       <!-- ===== WHAT CAN BE ADAPTED ===== -->
       <div class="prose-aside">
-        <h2 class="h3" data-i18n="custom.what.title"></h2>
+        <h2 class="h3" data-i18n="custom.what.title">What we can adapt</h2>
         <ul class="muted">
-          <li data-i18n="custom.what.1"></li>
-          <li data-i18n="custom.what.2"></li>
-          <li data-i18n="custom.what.3"></li>
+          <li data-i18n="custom.what.1">Dimensions: length, width and height.</li>
+          <li data-i18n="custom.what.2">Finish: walnut, black, white, beech tones.</li>
+          <li data-i18n="custom.what.3">The set: table alone or with nesting tables.</li>
         </ul>
-        <h2 class="h3 custom-how" data-i18n="custom.how.title"></h2>
-        <p class="muted" data-i18n="custom.how.text"></p>
+        <h2 class="h3 custom-how" data-i18n="custom.how.title">How it works</h2>
+        <p class="muted" data-i18n="custom.how.text">Describe your project. We check it with the workshop and come back with a price and lead time, with no commitment.</p>
       </div>
 
       <!-- ===== REQUEST FORM: opens the visitor's e-mail app (no data stored) ===== -->
       <div class="prose-main">
-        <h2 class="h2" data-i18n="form.title">Votre demande</h2>
+        <h2 class="h2" data-i18n="form.title">Your request</h2>
         <form id="custom-form" class="form" novalidate>
           <div class="form-row">
             <div class="field">
-              <label for="f-name" data-i18n="form.name">Nom</label>
+              <label for="f-name" data-i18n="form.name">Name</label>
               <input id="f-name" name="name" type="text" autocomplete="name" maxlength="120" data-required aria-describedby="f-name-error">
               <p id="f-name-error" class="error" hidden></p>
             </div>
             <div class="field">
-              <label for="f-email" data-i18n="form.email">E-mail</label>
+              <label for="f-email" data-i18n="form.email">Email</label>
               <input id="f-email" name="email" type="email" autocomplete="email" maxlength="160" data-required aria-describedby="f-email-error">
               <p id="f-email-error" class="error" hidden></p>
             </div>
           </div>
           <div class="form-row">
             <div class="field">
-              <label for="f-product" data-i18n="form.product">Modèle de départ</label>
+              <label for="f-product" data-i18n="form.product">Starting model</label>
               <select id="f-product" name="product"></select>
             </div>
             <div class="field">
-              <label for="f-finish" data-i18n="form.finish">Finition</label>
+              <label for="f-finish" data-i18n="form.finish">Finish</label>
               <input id="f-finish" name="finish" type="text" maxlength="120">
             </div>
           </div>
           <div class="field">
-            <label for="f-dims" data-i18n="form.dims">Dimensions souhaitées</label>
+            <label for="f-dims" data-i18n="form.dims">Dimensions you need</label>
             <input id="f-dims" name="dims" type="text" maxlength="120" aria-describedby="f-dims-hint">
-            <p id="f-dims-hint" class="hint" data-i18n="form.dimsHint"></p>
+            <p id="f-dims-hint" class="hint" data-i18n="form.dimsHint">For example: 120 × 60 × 40 cm</p>
           </div>
           <div class="field">
-            <label for="f-message" data-i18n="form.message">Votre projet</label>
+            <label for="f-message" data-i18n="form.message">Your project</label>
             <textarea id="f-message" name="message" maxlength="3000" data-required aria-describedby="f-message-error"></textarea>
             <p id="f-message-error" class="error" hidden></p>
           </div>
           <div>
-            <button class="btn btn-primary" type="submit" data-i18n="form.submit">Préparer l'e-mail</button>
-            <p class="small muted form-note" data-i18n="form.note"></p>
+            <button class="btn btn-primary" type="submit" data-i18n="form.submit">Prepare the email</button>
+            <p class="small muted form-note" data-i18n="form.note">The button opens your email app with the request already written. Nothing is stored on this site.</p>
           </div>
           <p id="form-sent" class="notice" role="status" hidden></p>
         </form>

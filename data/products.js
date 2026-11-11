@@ -10,7 +10,7 @@
    - name        display name (same in all languages)
    - category    sculptural | coffee-nesting | side | dining | mirrors | accessories
    - featured    true = shown on the home page
-   - description short text in fr / de / en
+   - description short text in en / de / fr / tr
    - material    key of a material text in assets/js/i18n.js (material.*)
    - colors      keys of AHC_COLORS below
    - variants    sizes / sets. price is in CHF; null = "price on request"
@@ -23,113 +23,127 @@ window.AHC_COLORS = {
   "walnut": {
     "swatch": "#5b3a26",
     "label": {
-      "fr": "Noyer",
+      "en": "Walnut",
       "de": "Nussbaum",
-      "en": "Walnut"
+      "fr": "Noyer",
+      "tr": "Ceviz"
     }
   },
   "black": {
     "swatch": "#1f1f1f",
     "label": {
-      "fr": "Noir",
+      "en": "Black",
       "de": "Schwarz",
-      "en": "Black"
+      "fr": "Noir",
+      "tr": "Siyah"
     }
   },
   "white": {
     "swatch": "#f2f0ec",
     "label": {
-      "fr": "Blanc",
+      "en": "White",
       "de": "Weiss",
-      "en": "White"
+      "fr": "Blanc",
+      "tr": "Beyaz"
     }
   },
   "natural": {
     "swatch": "#d9b48a",
     "label": {
-      "fr": "Naturel",
+      "en": "Natural",
       "de": "Natur",
-      "en": "Natural"
+      "fr": "Naturel",
+      "tr": "Doğal"
     }
   },
   "brown": {
     "swatch": "#9a6a43",
     "label": {
-      "fr": "Brun",
+      "en": "Brown",
       "de": "Braun",
-      "en": "Brown"
+      "fr": "Brun",
+      "tr": "Kahverengi"
     }
   },
   "darkbrown": {
     "swatch": "#4e3424",
     "label": {
-      "fr": "Brun foncé",
+      "en": "Dark brown",
       "de": "Dunkelbraun",
-      "en": "Dark brown"
+      "fr": "Brun foncé",
+      "tr": "Koyu kahve"
     }
   },
   "green": {
     "swatch": "#2f6b4a",
     "label": {
-      "fr": "Vert",
+      "en": "Green",
       "de": "Grün",
-      "en": "Green"
+      "fr": "Vert",
+      "tr": "Yeşil"
     }
   },
   "oak": {
     "swatch": "#c9a27a",
     "label": {
-      "fr": "Chêne",
+      "en": "Oak",
       "de": "Eiche",
-      "en": "Oak"
+      "fr": "Chêne",
+      "tr": "Meşe"
     }
   },
   "marbleblack": {
     "swatch": "#2a2a2c",
     "label": {
-      "fr": "Aspect marbre noir",
+      "en": "Black marble-look",
       "de": "Marmoroptik schwarz",
-      "en": "Black marble-look"
+      "fr": "Aspect marbre noir",
+      "tr": "Siyah mermer görünüm"
     }
   },
   "marblewhite": {
     "swatch": "#e8e6e2",
     "label": {
-      "fr": "Aspect marbre blanc",
+      "en": "White marble-look",
       "de": "Marmoroptik weiss",
-      "en": "White marble-look"
+      "fr": "Aspect marbre blanc",
+      "tr": "Beyaz mermer görünüm"
     }
   },
   "lightbrown": {
     "swatch": "#b98c62",
     "label": {
-      "fr": "Brun clair",
+      "en": "Light brown",
       "de": "Hellbraun",
-      "en": "Light brown"
+      "fr": "Brun clair",
+      "tr": "Açık kahve"
     }
   },
   "champagne": {
     "swatch": "#c8b48f",
     "label": {
-      "fr": "Champagne",
+      "en": "Champagne",
       "de": "Champagner",
-      "en": "Champagne"
+      "fr": "Champagne",
+      "tr": "Şampanya"
     }
   },
   "burgundy": {
     "swatch": "#6d2a2e",
     "label": {
-      "fr": "Bordeaux",
+      "en": "Burgundy",
       "de": "Bordeaux",
-      "en": "Burgundy"
+      "fr": "Bordeaux",
+      "tr": "Bordo"
     }
   },
   "walnutblack": {
     "swatch": "#3b2a20",
     "label": {
-      "fr": "Noyer et noir",
+      "en": "Walnut and black",
       "de": "Nussbaum und Schwarz",
-      "en": "Walnut and black"
+      "fr": "Noyer et noir",
+      "tr": "Ceviz ve siyah"
     }
   }
 };
@@ -141,9 +155,10 @@ window.AHC_PRODUCTS = [
     "category": "sculptural",
     "featured": true,
     "description": {
-      "fr": "Une table basse en deux zones : un plateau en bois et une fenêtre en verre trempé qui révèle une spirale de couches superposées.",
+      "en": "A two-zone coffee table: a wooden top and a tempered-glass window over a spiral of stacked layers.",
       "de": "Ein Couchtisch mit zwei Zonen: eine Holzplatte und ein Fenster aus Sicherheitsglas über einer Spirale aus gestapelten Schichten.",
-      "en": "A two-zone coffee table: a wooden top and a tempered-glass window over a spiral of stacked layers."
+      "fr": "Une table basse en deux zones : un plateau en bois et une fenêtre en verre trempé qui révèle une spirale de couches superposées.",
+      "tr": "İki bölgeli bir orta sehpa: ahşap tabla ve üst üste dizilmiş katmanlardan oluşan bir spiralin üzerinde temperli cam pencere."
     },
     "material": "veneerGlass",
     "colors": [
@@ -154,9 +169,10 @@ window.AHC_PRODUCTS = [
     "variants": [
       {
         "label": {
-          "fr": "Taille unique",
+          "en": "One size",
           "de": "Einheitsgrösse",
-          "en": "One size"
+          "fr": "Taille unique",
+          "tr": "Tek ölçü"
         },
         "dims": "135 × 68 × 34 cm",
         "price": 550
@@ -180,9 +196,10 @@ window.AHC_PRODUCTS = [
     "category": "sculptural",
     "featured": true,
     "description": {
-      "fr": "Des anneaux de 30 mm, superposés comme des courbes de niveau, sous un plateau en verre trempé.",
+      "en": "Rings of 30 mm layers, stacked like contour lines, under a tempered-glass top.",
       "de": "Ringe aus 30 mm starken Schichten, gestapelt wie Höhenlinien, unter einer Platte aus Sicherheitsglas.",
-      "en": "Rings of 30 mm layers, stacked like contour lines, under a tempered-glass top."
+      "fr": "Des anneaux de 30 mm, superposés comme des courbes de niveau, sous un plateau en verre trempé.",
+      "tr": "Kabartma haritadaki eş yükselti eğrileri gibi dizilmiş 30 mm'lik halkalar, üzerinde temperli cam tabla."
     },
     "material": "veneerGlass",
     "colors": [
@@ -193,36 +210,40 @@ window.AHC_PRODUCTS = [
     "variants": [
       {
         "label": {
-          "fr": "S",
+          "en": "S",
           "de": "S",
-          "en": "S"
+          "fr": "S",
+          "tr": "S"
         },
         "dims": "60 × 50 × 34 cm",
         "price": 365
       },
       {
         "label": {
-          "fr": "M",
+          "en": "M",
           "de": "M",
-          "en": "M"
+          "fr": "M",
+          "tr": "M"
         },
         "dims": "80 × 70 × 34 cm",
         "price": 530
       },
       {
         "label": {
-          "fr": "L",
+          "en": "L",
           "de": "L",
-          "en": "L"
+          "fr": "L",
+          "tr": "L"
         },
         "dims": "90 × 80 × 34 cm",
         "price": 650
       },
       {
         "label": {
-          "fr": "XL",
+          "en": "XL",
           "de": "XL",
-          "en": "XL"
+          "fr": "XL",
+          "tr": "XL"
         },
         "dims": "110 × 90 × 37 cm",
         "price": 895
@@ -247,9 +268,10 @@ window.AHC_PRODUCTS = [
     "category": "sculptural",
     "featured": false,
     "description": {
-      "fr": "La forme de Léman, cerclée d'un anneau noir qui en dessine le contour.",
+      "en": "Léman's form, framed by a black outer ring.",
       "de": "Die Form von Léman, gefasst von einem schwarzen Ring.",
-      "en": "Léman's form, framed by a black outer ring."
+      "fr": "La forme de Léman, cerclée d'un anneau noir qui en dessine le contour.",
+      "tr": "Léman'ın formu, dış çizgisini çizen siyah bir halkayla."
     },
     "material": "veneerGlass",
     "colors": [
@@ -258,9 +280,10 @@ window.AHC_PRODUCTS = [
     "variants": [
       {
         "label": {
-          "fr": "Taille unique",
+          "en": "One size",
           "de": "Einheitsgrösse",
-          "en": "One size"
+          "fr": "Taille unique",
+          "tr": "Tek ölçü"
         },
         "dims": "110 × 90 × 38 cm",
         "price": null
@@ -280,9 +303,10 @@ window.AHC_PRODUCTS = [
     "category": "sculptural",
     "featured": false,
     "description": {
-      "fr": "Une spirale qui monte d'un pied conique jusqu'au plateau en verre.",
+      "en": "A spiral rising from a conical base to a glass top.",
       "de": "Eine Spirale, die vom konischen Fuss bis zur Glasplatte aufsteigt.",
-      "en": "A spiral rising from a conical base to a glass top."
+      "fr": "Une spirale qui monte d'un pied conique jusqu'au plateau en verre.",
+      "tr": "Konik bir tabandan cam tablaya yükselen bir spiral."
     },
     "material": "veneerGlass",
     "colors": [
@@ -291,9 +315,10 @@ window.AHC_PRODUCTS = [
     "variants": [
       {
         "label": {
-          "fr": "Taille unique",
+          "en": "One size",
           "de": "Einheitsgrösse",
-          "en": "One size"
+          "fr": "Taille unique",
+          "tr": "Tek ölçü"
         },
         "dims": "90 × 80 × 35 cm",
         "price": null
@@ -313,9 +338,10 @@ window.AHC_PRODUCTS = [
     "category": "sculptural",
     "featured": true,
     "description": {
-      "fr": "Un piètement en gradins, comme les terrasses du vignoble, sous un plateau en verre.",
+      "en": "A stepped base, like vineyard terraces, under a glass top.",
       "de": "Ein gestufter Sockel wie die Rebterrassen, darüber eine Glasplatte.",
-      "en": "A stepped base, like vineyard terraces, under a glass top."
+      "fr": "Un piètement en gradins, comme les terrasses du vignoble, sous un plateau en verre.",
+      "tr": "Üzüm bağı terasları gibi basamaklı bir taban, üzerinde cam tabla."
     },
     "material": "veneerGlass",
     "colors": [
@@ -324,9 +350,10 @@ window.AHC_PRODUCTS = [
     "variants": [
       {
         "label": {
-          "fr": "Taille unique",
+          "en": "One size",
           "de": "Einheitsgrösse",
-          "en": "One size"
+          "fr": "Taille unique",
+          "tr": "Tek ölçü"
         },
         "dims": "110 × 55 × 37 cm",
         "price": null
@@ -346,9 +373,10 @@ window.AHC_PRODUCTS = [
     "category": "sculptural",
     "featured": true,
     "description": {
-      "fr": "Un triangle aux angles adoucis, porté par un piètement paramétrique en lamelles.",
+      "en": "A soft-cornered triangle on a parametric slatted base.",
       "de": "Ein Dreieck mit weichen Ecken auf einem parametrischen Lamellensockel.",
-      "en": "A soft-cornered triangle on a parametric slatted base."
+      "fr": "Un triangle aux angles adoucis, porté par un piètement paramétrique en lamelles.",
+      "tr": "Köşeleri yumuşatılmış bir üçgen, parametrik lamel bir taban üzerinde."
     },
     "material": "veneerGlass",
     "colors": [
@@ -359,36 +387,40 @@ window.AHC_PRODUCTS = [
     "variants": [
       {
         "label": {
-          "fr": "S",
+          "en": "S",
           "de": "S",
-          "en": "S"
+          "fr": "S",
+          "tr": "S"
         },
         "dims": "82 × 80 × 34 cm",
         "price": 545
       },
       {
         "label": {
-          "fr": "M",
+          "en": "M",
           "de": "M",
-          "en": "M"
+          "fr": "M",
+          "tr": "M"
         },
         "dims": "109 × 105 × 37 cm",
         "price": 865
       },
       {
         "label": {
-          "fr": "L",
+          "en": "L",
           "de": "L",
-          "en": "L"
+          "fr": "L",
+          "tr": "L"
         },
         "dims": "125 × 120 × 37 cm",
         "price": 1000
       },
       {
         "label": {
-          "fr": "XL",
+          "en": "XL",
           "de": "XL",
-          "en": "XL"
+          "fr": "XL",
+          "tr": "XL"
         },
         "dims": "147 × 141 × 40 cm",
         "price": 1225
@@ -411,9 +443,10 @@ window.AHC_PRODUCTS = [
     "category": "sculptural",
     "featured": false,
     "description": {
-      "fr": "Un ovale allongé dont le piètement en lamelles se lit à travers le verre.",
+      "en": "A long oval whose slatted base shows through the glass.",
       "de": "Ein lang gezogenes Oval, dessen Lamellensockel durch das Glas sichtbar ist.",
-      "en": "A long oval whose slatted base shows through the glass."
+      "fr": "Un ovale allongé dont le piètement en lamelles se lit à travers le verre.",
+      "tr": "Lamel tabanı camın içinden görünen uzun bir oval."
     },
     "material": "veneerGlass",
     "colors": [
@@ -424,18 +457,20 @@ window.AHC_PRODUCTS = [
     "variants": [
       {
         "label": {
-          "fr": "Table centrale",
+          "en": "Coffee table",
           "de": "Couchtisch",
-          "en": "Coffee table"
+          "fr": "Table centrale",
+          "tr": "Orta sehpa"
         },
         "dims": "102 × 51 × 33 cm",
         "price": 515
       },
       {
         "label": {
-          "fr": "Grande table centrale",
+          "en": "Large coffee table",
           "de": "Grosser Couchtisch",
-          "en": "Large coffee table"
+          "fr": "Grande table centrale",
+          "tr": "Büyük orta sehpa"
         },
         "dims": "135 × 64 × 33 cm",
         "price": 760
@@ -456,9 +491,10 @@ window.AHC_PRODUCTS = [
     "category": "coffee-nesting",
     "featured": true,
     "description": {
-      "fr": "Une table centrale en forme de galet et jusqu'à trois tables gigognes, en hêtre teinté.",
+      "en": "A pebble-shaped coffee table with up to three nesting tables, in stained beech.",
       "de": "Ein Couchtisch in Kieselform und bis zu drei Satztische aus gebeizter Buche.",
-      "en": "A pebble-shaped coffee table with up to three nesting tables, in stained beech."
+      "fr": "Une table centrale en forme de galet et jusqu'à trois tables gigognes, en hêtre teinté.",
+      "tr": "Çakıl taşı formunda bir orta sehpa ve üç taneye kadar zigon sehpa, boyalı kayından."
     },
     "material": "beechStained",
     "colors": [
@@ -470,45 +506,50 @@ window.AHC_PRODUCTS = [
     "variants": [
       {
         "label": {
-          "fr": "Petite table centrale",
+          "en": "Small coffee table",
           "de": "Kleiner Couchtisch",
-          "en": "Small coffee table"
+          "fr": "Petite table centrale",
+          "tr": "Küçük orta sehpa"
         },
         "dims": "82 × 60 × 41 cm",
         "price": 175
       },
       {
         "label": {
-          "fr": "Table centrale",
+          "en": "Coffee table",
           "de": "Couchtisch",
-          "en": "Coffee table"
+          "fr": "Table centrale",
+          "tr": "Orta sehpa"
         },
         "dims": "96 × 70 × 41 cm",
         "price": 205
       },
       {
         "label": {
-          "fr": "Lot de 3 gigognes",
+          "en": "Set of 3 nesting tables",
           "de": "3 Satztische",
-          "en": "Set of 3 nesting tables"
+          "fr": "Lot de 3 gigognes",
+          "tr": "3'lü zigon"
         },
         "dims": "45 × 33 × 41 / 55 × 40 × 46 / 65 × 48 × 51 cm",
         "price": 215
       },
       {
         "label": {
-          "fr": "Table centrale + 2 gigognes",
+          "en": "Coffee table + 2 nesting tables",
           "de": "Couchtisch + 2 Satztische",
-          "en": "Coffee table + 2 nesting tables"
+          "fr": "Table centrale + 2 gigognes",
+          "tr": "Orta sehpa + 2 zigon"
         },
         "dims": "96 × 70 × 41 cm + 2",
         "price": 340
       },
       {
         "label": {
-          "fr": "Table centrale + 3 gigognes",
+          "en": "Coffee table + 3 nesting tables",
           "de": "Couchtisch + 3 Satztische",
-          "en": "Coffee table + 3 nesting tables"
+          "fr": "Table centrale + 3 gigognes",
+          "tr": "Orta sehpa + 3 zigon"
         },
         "dims": "96 × 70 × 41 cm + 3",
         "price": 420
@@ -535,9 +576,10 @@ window.AHC_PRODUCTS = [
     "category": "coffee-nesting",
     "featured": false,
     "description": {
-      "fr": "Un ovale effilé sur pieds fuselés, avec deux tables d'appoint assorties.",
+      "en": "A slim oval on tapered legs, with two matching side tables.",
       "de": "Ein schlankes Oval auf konischen Beinen, mit zwei passenden Beistelltischen.",
-      "en": "A slim oval on tapered legs, with two matching side tables."
+      "fr": "Un ovale effilé sur pieds fuselés, avec deux tables d'appoint assorties.",
+      "tr": "Konik ayaklar üzerinde ince bir oval, iki uyumlu yan sehpayla."
     },
     "material": "beechStained",
     "colors": [
@@ -548,27 +590,30 @@ window.AHC_PRODUCTS = [
     "variants": [
       {
         "label": {
-          "fr": "2 tables d'appoint",
+          "en": "2 side tables",
           "de": "2 Beistelltische",
-          "en": "2 side tables"
+          "fr": "2 tables d'appoint",
+          "tr": "2 yan sehpa"
         },
         "dims": "50 × 32 × 46 cm",
         "price": 175
       },
       {
         "label": {
-          "fr": "Table centrale",
+          "en": "Coffee table",
           "de": "Couchtisch",
-          "en": "Coffee table"
+          "fr": "Table centrale",
+          "tr": "Orta sehpa"
         },
         "dims": "110 × 51 × 41 cm",
         "price": 200
       },
       {
         "label": {
-          "fr": "Table centrale + 2 tables d'appoint",
+          "en": "Coffee table + 2 side tables",
           "de": "Couchtisch + 2 Beistelltische",
-          "en": "Coffee table + 2 side tables"
+          "fr": "Table centrale + 2 tables d'appoint",
+          "tr": "Orta sehpa + 2 yan sehpa"
         },
         "dims": "110 × 51 × 41 cm + 2",
         "price": 345
@@ -594,9 +639,10 @@ window.AHC_PRODUCTS = [
     "category": "coffee-nesting",
     "featured": false,
     "description": {
-      "fr": "Un plateau ovale gravé de lignes concentriques, seul ou avec ses tables d'appoint.",
+      "en": "An oval top engraved with concentric lines, alone or with side tables.",
       "de": "Eine ovale Platte mit eingravierten konzentrischen Linien, allein oder mit Beistelltischen.",
-      "en": "An oval top engraved with concentric lines, alone or with side tables."
+      "fr": "Un plateau ovale gravé de lignes concentriques, seul ou avec ses tables d'appoint.",
+      "tr": "İç içe çizgiler kazınmış oval bir tabla, tek başına ya da yan sehpalarıyla."
     },
     "material": "beechSolid",
     "colors": [
@@ -608,27 +654,30 @@ window.AHC_PRODUCTS = [
     "variants": [
       {
         "label": {
-          "fr": "Petite table centrale",
+          "en": "Small coffee table",
           "de": "Kleiner Couchtisch",
-          "en": "Small coffee table"
+          "fr": "Petite table centrale",
+          "tr": "Küçük orta sehpa"
         },
         "dims": "92 × 40 × 41 cm",
         "price": 165
       },
       {
         "label": {
-          "fr": "Table centrale",
+          "en": "Coffee table",
           "de": "Couchtisch",
-          "en": "Coffee table"
+          "fr": "Table centrale",
+          "tr": "Orta sehpa"
         },
         "dims": "115 × 50 × 41 cm",
         "price": 200
       },
       {
         "label": {
-          "fr": "Table centrale + 2 tables d'appoint",
+          "en": "Coffee table + 2 side tables",
           "de": "Couchtisch + 2 Beistelltische",
-          "en": "Coffee table + 2 side tables"
+          "fr": "Table centrale + 2 tables d'appoint",
+          "tr": "Orta sehpa + 2 yan sehpa"
         },
         "dims": "115 × 50 × 41 cm + 2",
         "price": 345
@@ -650,9 +699,10 @@ window.AHC_PRODUCTS = [
     "category": "coffee-nesting",
     "featured": false,
     "description": {
-      "fr": "Une table ronde en hêtre massif : plateau gravé d'un motif géométrique, trois pieds tournés.",
+      "en": "A round solid-beech table: geometric engraved top, three turned legs.",
       "de": "Ein runder Tisch aus massiver Buche: gravierte geometrische Platte, drei gedrechselte Beine.",
-      "en": "A round solid-beech table: geometric engraved top, three turned legs."
+      "fr": "Une table ronde en hêtre massif : plateau gravé d'un motif géométrique, trois pieds tournés.",
+      "tr": "Masif kayından yuvarlak bir sehpa: geometrik desen kazınmış tabla, üç torna ayak."
     },
     "material": "beechSolid",
     "colors": [
@@ -664,27 +714,30 @@ window.AHC_PRODUCTS = [
     "variants": [
       {
         "label": {
-          "fr": "Ø 60 cm",
+          "en": "Ø 60 cm",
           "de": "Ø 60 cm",
-          "en": "Ø 60 cm"
+          "fr": "Ø 60 cm",
+          "tr": "Ø 60 cm"
         },
         "dims": "Ø 60 × 45 cm",
         "price": 220
       },
       {
         "label": {
-          "fr": "Ø 75 cm",
+          "en": "Ø 75 cm",
           "de": "Ø 75 cm",
-          "en": "Ø 75 cm"
+          "fr": "Ø 75 cm",
+          "tr": "Ø 75 cm"
         },
         "dims": "Ø 75 × 45 cm",
         "price": 310
       },
       {
         "label": {
-          "fr": "Ø 90 cm",
+          "en": "Ø 90 cm",
           "de": "Ø 90 cm",
-          "en": "Ø 90 cm"
+          "fr": "Ø 90 cm",
+          "tr": "Ø 90 cm"
         },
         "dims": "Ø 90 × 45 cm",
         "price": 395
@@ -704,9 +757,10 @@ window.AHC_PRODUCTS = [
     "category": "coffee-nesting",
     "featured": false,
     "description": {
-      "fr": "Trois plateaux triangulaires qui s'emboîtent.",
+      "en": "Three triangular tops that nest into one another.",
       "de": "Drei dreieckige Platten, die sich ineinanderschieben.",
-      "en": "Three triangular tops that nest into one another."
+      "fr": "Trois plateaux triangulaires qui s'emboîtent.",
+      "tr": "İç içe geçen üç üçgen tabla."
     },
     "material": "beechPanel",
     "colors": [
@@ -715,9 +769,10 @@ window.AHC_PRODUCTS = [
     "variants": [
       {
         "label": {
-          "fr": "Taille unique",
+          "en": "One size",
           "de": "Einheitsgrösse",
-          "en": "One size"
+          "fr": "Taille unique",
+          "tr": "Tek ölçü"
         },
         "dims": "100 × 48 × 52",
         "price": null
@@ -737,9 +792,10 @@ window.AHC_PRODUCTS = [
     "category": "side",
     "featured": true,
     "description": {
-      "fr": "Une table d'appoint en C qui glisse sous le canapé. Plateau noyer, ou aspect marbre noir ou blanc.",
+      "en": "A C-shaped side table that slides under the sofa. Walnut top, or black or white marble-look.",
       "de": "Ein C-Beistelltisch, der unter das Sofa gleitet. Platte in Nussbaum oder schwarzer bzw. weisser Marmoroptik.",
-      "en": "A C-shaped side table that slides under the sofa. Walnut top, or black or white marble-look."
+      "fr": "Une table d'appoint en C qui glisse sous le canapé. Plateau noyer, ou aspect marbre noir ou blanc.",
+      "tr": "Kanepenin altına kayan C formunda bir yan sehpa. Ceviz tabla, ya da siyah veya beyaz mermer görünümlü."
     },
     "material": "cTable",
     "colors": [
@@ -750,9 +806,10 @@ window.AHC_PRODUCTS = [
     "variants": [
       {
         "label": {
-          "fr": "Taille unique",
+          "en": "One size",
           "de": "Einheitsgrösse",
-          "en": "One size"
+          "fr": "Taille unique",
+          "tr": "Tek ölçü"
         },
         "dims": "Ø 40 × 60,5 cm",
         "price": 165
@@ -778,9 +835,10 @@ window.AHC_PRODUCTS = [
     "category": "side",
     "featured": false,
     "description": {
-      "fr": "Une table en C sur roulettes, en chêne ou en noyer, pour l'ordinateur ou le café.",
+      "en": "A C-table on casters, in oak or walnut, for a laptop or a coffee.",
       "de": "Ein C-Tisch auf Rollen, in Eiche oder Nussbaum, für Laptop oder Kaffee.",
-      "en": "A C-table on casters, in oak or walnut, for a laptop or a coffee."
+      "fr": "Une table en C sur roulettes, en chêne ou en noyer, pour l'ordinateur ou le café.",
+      "tr": "Tekerlekli bir C sehpa, meşe ya da ceviz; dizüstü bilgisayar ya da kahve için."
     },
     "material": "cCaster",
     "colors": [
@@ -790,9 +848,10 @@ window.AHC_PRODUCTS = [
     "variants": [
       {
         "label": {
-          "fr": "Taille unique",
+          "en": "One size",
           "de": "Einheitsgrösse",
-          "en": "One size"
+          "fr": "Taille unique",
+          "tr": "Tek ölçü"
         },
         "dims": "50 × 35 × 60 cm",
         "price": 165
@@ -813,9 +872,10 @@ window.AHC_PRODUCTS = [
     "category": "side",
     "featured": false,
     "description": {
-      "fr": "Une table d'appoint légère : pied en métal noir ou en bois, plateau uni ou gravé d'un mandala.",
+      "en": "A light side table: black metal or wood leg, plain top or engraved with a mandala.",
       "de": "Ein leichter Beistelltisch: Fuss aus schwarzem Metall oder Holz, Platte schlicht oder mit Mandala-Gravur.",
-      "en": "A light side table: black metal or wood leg, plain top or engraved with a mandala."
+      "fr": "Une table d'appoint légère : pied en métal noir ou en bois, plateau uni ou gravé d'un mandala.",
+      "tr": "Hafif bir yan sehpa: siyah metal ya da ahşap ayak, düz ya da mandala kazınmış tabla."
     },
     "material": "veneerMetal",
     "colors": [
@@ -826,18 +886,20 @@ window.AHC_PRODUCTS = [
     "variants": [
       {
         "label": {
-          "fr": "Pied en métal",
+          "en": "Metal leg",
           "de": "Metallfuss",
-          "en": "Metal leg"
+          "fr": "Pied en métal",
+          "tr": "Metal ayak"
         },
         "dims": "Ø 40 × 60 cm",
         "price": 110
       },
       {
         "label": {
-          "fr": "Pied en bois",
+          "en": "Wood leg",
           "de": "Holzfuss",
-          "en": "Wood leg"
+          "fr": "Pied en bois",
+          "tr": "Ahşap ayak"
         },
         "dims": "Ø 40 × 60 cm",
         "price": 125
@@ -860,9 +922,10 @@ window.AHC_PRODUCTS = [
     "category": "side",
     "featured": false,
     "description": {
-      "fr": "Une tablette réglable en hauteur, fixée sur un montant ajouré.",
+      "en": "A height-adjustable tray on a slotted upright.",
       "de": "Eine höhenverstellbare Ablage an einer gelochten Stütze.",
-      "en": "A height-adjustable tray on a slotted upright."
+      "fr": "Une tablette réglable en hauteur, fixée sur un montant ajouré.",
+      "tr": "Delikli bir dikmeye takılan, yüksekliği ayarlanabilir bir tabla."
     },
     "material": "beechPanel",
     "colors": [
@@ -871,9 +934,10 @@ window.AHC_PRODUCTS = [
     "variants": [
       {
         "label": {
-          "fr": "Taille unique",
+          "en": "One size",
           "de": "Einheitsgrösse",
-          "en": "One size"
+          "fr": "Taille unique",
+          "tr": "Tek ölçü"
         },
         "dims": "50 × 40 × 77 cm (adjustable)",
         "price": null
@@ -893,9 +957,10 @@ window.AHC_PRODUCTS = [
     "category": "dining",
     "featured": false,
     "description": {
-      "fr": "Chêne massif naturel, pieds fins et assemblages adoucis.",
+      "en": "Natural solid oak, slim legs and softened joints.",
       "de": "Massive Eiche natur, schlanke Beine und weiche Verbindungen.",
-      "en": "Natural solid oak, slim legs and softened joints."
+      "fr": "Chêne massif naturel, pieds fins et assemblages adoucis.",
+      "tr": "Doğal masif meşe, ince ayaklar ve yumuşatılmış birleşimler."
     },
     "material": "oakSolid",
     "colors": [
@@ -904,9 +969,10 @@ window.AHC_PRODUCTS = [
     "variants": [
       {
         "label": {
-          "fr": "Taille unique",
+          "en": "One size",
           "de": "Einheitsgrösse",
-          "en": "One size"
+          "fr": "Taille unique",
+          "tr": "Tek ölçü"
         },
         "dims": "200 × 100 × 75 cm",
         "price": null
@@ -926,9 +992,10 @@ window.AHC_PRODUCTS = [
     "category": "dining",
     "featured": false,
     "description": {
-      "fr": "Chêne massif teinté noir, aux lignes architecturales.",
+      "en": "Solid oak stained black, with architectural lines.",
       "de": "Massive Eiche, schwarz gebeizt, mit architektonischen Linien.",
-      "en": "Solid oak stained black, with architectural lines."
+      "fr": "Chêne massif teinté noir, aux lignes architecturales.",
+      "tr": "Siyah boyalı masif meşe, mimari çizgiler."
     },
     "material": "oakSolid",
     "colors": [
@@ -937,9 +1004,10 @@ window.AHC_PRODUCTS = [
     "variants": [
       {
         "label": {
-          "fr": "Taille unique",
+          "en": "One size",
           "de": "Einheitsgrösse",
-          "en": "One size"
+          "fr": "Taille unique",
+          "tr": "Tek ölçü"
         },
         "dims": "200 × 100 × 75 cm",
         "price": null
@@ -959,9 +1027,10 @@ window.AHC_PRODUCTS = [
     "category": "dining",
     "featured": false,
     "description": {
-      "fr": "Chêne massif teinte noyer ; les placages du plateau se rejoignent au centre.",
+      "en": "Solid oak in a walnut tone; the top's veneers meet at the centre.",
       "de": "Massive Eiche in Nussbaumton; die Furniere der Platte treffen sich in der Mitte.",
-      "en": "Solid oak in a walnut tone; the top's veneers meet at the centre."
+      "fr": "Chêne massif teinte noyer ; les placages du plateau se rejoignent au centre.",
+      "tr": "Ceviz tonunda masif meşe; tablanın kaplamaları merkezde birleşiyor."
     },
     "material": "oakSolid",
     "colors": [
@@ -970,9 +1039,10 @@ window.AHC_PRODUCTS = [
     "variants": [
       {
         "label": {
-          "fr": "Taille unique",
+          "en": "One size",
           "de": "Einheitsgrösse",
-          "en": "One size"
+          "fr": "Taille unique",
+          "tr": "Tek ölçü"
         },
         "dims": "200 × 100 × 75 cm",
         "price": null
@@ -992,9 +1062,10 @@ window.AHC_PRODUCTS = [
     "category": "dining",
     "featured": false,
     "description": {
-      "fr": "Plateau rond et pieds qui s'ouvrent depuis le centre. Chêne naturel.",
+      "en": "Round top, legs opening out from the centre. Natural oak.",
       "de": "Runde Platte, Beine, die sich von der Mitte aus öffnen. Eiche natur.",
-      "en": "Round top, legs opening out from the centre. Natural oak."
+      "fr": "Plateau rond et pieds qui s'ouvrent depuis le centre. Chêne naturel.",
+      "tr": "Yuvarlak tabla, merkezden açılan ayaklar. Doğal meşe."
     },
     "material": "oakSolid",
     "colors": [
@@ -1003,9 +1074,10 @@ window.AHC_PRODUCTS = [
     "variants": [
       {
         "label": {
-          "fr": "Taille unique",
+          "en": "One size",
           "de": "Einheitsgrösse",
-          "en": "One size"
+          "fr": "Taille unique",
+          "tr": "Tek ölçü"
         },
         "dims": "Ø 120 × 75 cm",
         "price": null
@@ -1025,9 +1097,10 @@ window.AHC_PRODUCTS = [
     "category": "dining",
     "featured": false,
     "description": {
-      "fr": "Chêne massif noir, piètement en V.",
+      "en": "Solid black oak, V-shaped base.",
       "de": "Massive Eiche schwarz, V-Gestell.",
-      "en": "Solid black oak, V-shaped base."
+      "fr": "Chêne massif noir, piètement en V.",
+      "tr": "Siyah masif meşe, V ayak."
     },
     "material": "oakSolid",
     "colors": [
@@ -1036,9 +1109,10 @@ window.AHC_PRODUCTS = [
     "variants": [
       {
         "label": {
-          "fr": "Taille unique",
+          "en": "One size",
           "de": "Einheitsgrösse",
-          "en": "One size"
+          "fr": "Taille unique",
+          "tr": "Tek ölçü"
         },
         "dims": "180 × 90 × 75 cm",
         "price": null
@@ -1058,9 +1132,10 @@ window.AHC_PRODUCTS = [
     "category": "dining",
     "featured": false,
     "description": {
-      "fr": "Chêne massif teinte noyer, piètement en croix.",
+      "en": "Solid oak in a walnut tone, crossed base.",
       "de": "Massive Eiche in Nussbaumton, Kreuzgestell.",
-      "en": "Solid oak in a walnut tone, crossed base."
+      "fr": "Chêne massif teinte noyer, piètement en croix.",
+      "tr": "Ceviz tonunda masif meşe, çapraz ayak."
     },
     "material": "oakSolid",
     "colors": [
@@ -1069,9 +1144,10 @@ window.AHC_PRODUCTS = [
     "variants": [
       {
         "label": {
-          "fr": "Taille unique",
+          "en": "One size",
           "de": "Einheitsgrösse",
-          "en": "One size"
+          "fr": "Taille unique",
+          "tr": "Tek ölçü"
         },
         "dims": "180 × 90 × 75 cm",
         "price": null
@@ -1091,9 +1167,10 @@ window.AHC_PRODUCTS = [
     "category": "dining",
     "featured": false,
     "description": {
-      "fr": "Chêne naturel, piètement en X, plateau à motif à chevrons.",
+      "en": "Natural oak, X base, herringbone-patterned top.",
       "de": "Eiche natur, X-Gestell, Platte mit Fischgratmuster.",
-      "en": "Natural oak, X base, herringbone-patterned top."
+      "fr": "Chêne naturel, piètement en X, plateau à motif à chevrons.",
+      "tr": "Doğal meşe, X ayak, balıksırtı desenli tabla."
     },
     "material": "oakSolid",
     "colors": [
@@ -1102,9 +1179,10 @@ window.AHC_PRODUCTS = [
     "variants": [
       {
         "label": {
-          "fr": "Taille unique",
+          "en": "One size",
           "de": "Einheitsgrösse",
-          "en": "One size"
+          "fr": "Taille unique",
+          "tr": "Tek ölçü"
         },
         "dims": "180 × 90 × 75 cm",
         "price": null
@@ -1124,9 +1202,10 @@ window.AHC_PRODUCTS = [
     "category": "dining",
     "featured": false,
     "description": {
-      "fr": "Table ronde en chêne teinte noyer, pieds évasés.",
+      "en": "Round oak table in a walnut tone, splayed legs.",
       "de": "Runder Tisch aus Eiche in Nussbaumton, ausgestellte Beine.",
-      "en": "Round oak table in a walnut tone, splayed legs."
+      "fr": "Table ronde en chêne teinte noyer, pieds évasés.",
+      "tr": "Ceviz tonunda meşeden yuvarlak masa, açılı ayaklar."
     },
     "material": "oakSolid",
     "colors": [
@@ -1135,9 +1214,10 @@ window.AHC_PRODUCTS = [
     "variants": [
       {
         "label": {
-          "fr": "Taille unique",
+          "en": "One size",
           "de": "Einheitsgrösse",
-          "en": "One size"
+          "fr": "Taille unique",
+          "tr": "Tek ölçü"
         },
         "dims": "Ø 120 × 75 cm",
         "price": null
@@ -1157,9 +1237,10 @@ window.AHC_PRODUCTS = [
     "category": "dining",
     "featured": false,
     "description": {
-      "fr": "Pieds robustes et plateau à motif, en chêne naturel.",
+      "en": "Sturdy legs and a patterned top, in natural oak.",
       "de": "Kräftige Beine und gemusterte Platte, Eiche natur.",
-      "en": "Sturdy legs and a patterned top, in natural oak."
+      "fr": "Pieds robustes et plateau à motif, en chêne naturel.",
+      "tr": "Güçlü ayaklar ve desenli tabla, doğal meşe."
     },
     "material": "oakSolid",
     "colors": [
@@ -1168,9 +1249,10 @@ window.AHC_PRODUCTS = [
     "variants": [
       {
         "label": {
-          "fr": "Taille unique",
+          "en": "One size",
           "de": "Einheitsgrösse",
-          "en": "One size"
+          "fr": "Taille unique",
+          "tr": "Tek ölçü"
         },
         "dims": "200 × 100 × 75 cm",
         "price": null
@@ -1190,9 +1272,10 @@ window.AHC_PRODUCTS = [
     "category": "accessories",
     "featured": false,
     "description": {
-      "fr": "Portemanteau en hêtre massif, démontable.",
+      "en": "Solid beech coat stand, flat-pack.",
       "de": "Garderobenständer aus massiver Buche, zerlegbar.",
-      "en": "Solid beech coat stand, flat-pack."
+      "fr": "Portemanteau en hêtre massif, démontable.",
+      "tr": "Masif kayın portmanto, demonte."
     },
     "material": "beechSolid",
     "colors": [
@@ -1201,9 +1284,10 @@ window.AHC_PRODUCTS = [
     "variants": [
       {
         "label": {
-          "fr": "Taille unique",
+          "en": "One size",
           "de": "Einheitsgrösse",
-          "en": "One size"
+          "fr": "Taille unique",
+          "tr": "Tek ölçü"
         },
         "dims": null,
         "price": null
@@ -1223,9 +1307,10 @@ window.AHC_PRODUCTS = [
     "category": "mirrors",
     "featured": false,
     "description": {
-      "fr": "Miroir mural au cadre fin, forme ronde. Quatre couleurs de cadre.",
+      "en": "Wall mirror with a slim frame, round shape. Four frame colours.",
       "de": "Wandspiegel mit schmalem Rahmen, Form: rund. Vier Rahmenfarben.",
-      "en": "Wall mirror with a slim frame, round shape. Four frame colours."
+      "fr": "Miroir mural au cadre fin, forme ronde. Quatre couleurs de cadre.",
+      "tr": "İnce çerçeveli duvar aynası, yuvarlak form. Dört çerçeve rengi."
     },
     "material": "mirror",
     "colors": [
@@ -1237,9 +1322,10 @@ window.AHC_PRODUCTS = [
     "variants": [
       {
         "label": {
-          "fr": "Taille unique",
+          "en": "One size",
           "de": "Einheitsgrösse",
-          "en": "One size"
+          "fr": "Taille unique",
+          "tr": "Tek ölçü"
         },
         "dims": null,
         "price": null
@@ -1260,9 +1346,10 @@ window.AHC_PRODUCTS = [
     "category": "mirrors",
     "featured": false,
     "description": {
-      "fr": "Miroir mural au cadre fin, forme cercle échancré. Quatre couleurs de cadre.",
+      "en": "Wall mirror with a slim frame, notched circle shape. Four frame colours.",
       "de": "Wandspiegel mit schmalem Rahmen, Form: eingekerbter Kreis. Vier Rahmenfarben.",
-      "en": "Wall mirror with a slim frame, notched circle shape. Four frame colours."
+      "fr": "Miroir mural au cadre fin, forme cercle échancré. Quatre couleurs de cadre.",
+      "tr": "İnce çerçeveli duvar aynası, çentikli daire form. Dört çerçeve rengi."
     },
     "material": "mirror",
     "colors": [
@@ -1274,9 +1361,10 @@ window.AHC_PRODUCTS = [
     "variants": [
       {
         "label": {
-          "fr": "Taille unique",
+          "en": "One size",
           "de": "Einheitsgrösse",
-          "en": "One size"
+          "fr": "Taille unique",
+          "tr": "Tek ölçü"
         },
         "dims": null,
         "price": null
@@ -1296,9 +1384,10 @@ window.AHC_PRODUCTS = [
     "category": "mirrors",
     "featured": false,
     "description": {
-      "fr": "Miroir mural au cadre fin, forme capsule. Quatre couleurs de cadre.",
+      "en": "Wall mirror with a slim frame, capsule shape. Four frame colours.",
       "de": "Wandspiegel mit schmalem Rahmen, Form: Kapsel. Vier Rahmenfarben.",
-      "en": "Wall mirror with a slim frame, capsule shape. Four frame colours."
+      "fr": "Miroir mural au cadre fin, forme capsule. Quatre couleurs de cadre.",
+      "tr": "İnce çerçeveli duvar aynası, kapsül form. Dört çerçeve rengi."
     },
     "material": "mirror",
     "colors": [
@@ -1310,9 +1399,10 @@ window.AHC_PRODUCTS = [
     "variants": [
       {
         "label": {
-          "fr": "Taille unique",
+          "en": "One size",
           "de": "Einheitsgrösse",
-          "en": "One size"
+          "fr": "Taille unique",
+          "tr": "Tek ölçü"
         },
         "dims": null,
         "price": null
@@ -1332,9 +1422,10 @@ window.AHC_PRODUCTS = [
     "category": "mirrors",
     "featured": false,
     "description": {
-      "fr": "Miroir mural au cadre fin, forme nuage, à l'horizontale. Quatre couleurs de cadre.",
+      "en": "Wall mirror with a slim frame, cloud, landscape shape. Four frame colours.",
       "de": "Wandspiegel mit schmalem Rahmen, Form: Wolke, quer. Vier Rahmenfarben.",
-      "en": "Wall mirror with a slim frame, cloud, landscape shape. Four frame colours."
+      "fr": "Miroir mural au cadre fin, forme nuage, à l'horizontale. Quatre couleurs de cadre.",
+      "tr": "İnce çerçeveli duvar aynası, bulut, yatay form. Dört çerçeve rengi."
     },
     "material": "mirror",
     "colors": [
@@ -1346,9 +1437,10 @@ window.AHC_PRODUCTS = [
     "variants": [
       {
         "label": {
-          "fr": "Taille unique",
+          "en": "One size",
           "de": "Einheitsgrösse",
-          "en": "One size"
+          "fr": "Taille unique",
+          "tr": "Tek ölçü"
         },
         "dims": null,
         "price": null
@@ -1368,9 +1460,10 @@ window.AHC_PRODUCTS = [
     "category": "mirrors",
     "featured": false,
     "description": {
-      "fr": "Miroir mural au cadre fin, forme en D. Quatre couleurs de cadre.",
+      "en": "Wall mirror with a slim frame, D-shape shape. Four frame colours.",
       "de": "Wandspiegel mit schmalem Rahmen, Form: D-Form. Vier Rahmenfarben.",
-      "en": "Wall mirror with a slim frame, D-shape shape. Four frame colours."
+      "fr": "Miroir mural au cadre fin, forme en D. Quatre couleurs de cadre.",
+      "tr": "İnce çerçeveli duvar aynası, D formu form. Dört çerçeve rengi."
     },
     "material": "mirror",
     "colors": [
@@ -1382,9 +1475,10 @@ window.AHC_PRODUCTS = [
     "variants": [
       {
         "label": {
-          "fr": "Taille unique",
+          "en": "One size",
           "de": "Einheitsgrösse",
-          "en": "One size"
+          "fr": "Taille unique",
+          "tr": "Tek ölçü"
         },
         "dims": null,
         "price": null
@@ -1404,9 +1498,10 @@ window.AHC_PRODUCTS = [
     "category": "mirrors",
     "featured": false,
     "description": {
-      "fr": "Miroir mural au cadre fin, forme galet organique. Quatre couleurs de cadre.",
+      "en": "Wall mirror with a slim frame, organic pebble shape. Four frame colours.",
       "de": "Wandspiegel mit schmalem Rahmen, Form: organischer Kiesel. Vier Rahmenfarben.",
-      "en": "Wall mirror with a slim frame, organic pebble shape. Four frame colours."
+      "fr": "Miroir mural au cadre fin, forme galet organique. Quatre couleurs de cadre.",
+      "tr": "İnce çerçeveli duvar aynası, organik çakıl form. Dört çerçeve rengi."
     },
     "material": "mirror",
     "colors": [
@@ -1418,9 +1513,10 @@ window.AHC_PRODUCTS = [
     "variants": [
       {
         "label": {
-          "fr": "Taille unique",
+          "en": "One size",
           "de": "Einheitsgrösse",
-          "en": "One size"
+          "fr": "Taille unique",
+          "tr": "Tek ölçü"
         },
         "dims": null,
         "price": null
@@ -1441,9 +1537,10 @@ window.AHC_PRODUCTS = [
     "category": "mirrors",
     "featured": false,
     "description": {
-      "fr": "Miroir mural au cadre fin, forme vague verticale. Quatre couleurs de cadre.",
+      "en": "Wall mirror with a slim frame, tall wave shape. Four frame colours.",
       "de": "Wandspiegel mit schmalem Rahmen, Form: hohe Welle. Vier Rahmenfarben.",
-      "en": "Wall mirror with a slim frame, tall wave shape. Four frame colours."
+      "fr": "Miroir mural au cadre fin, forme vague verticale. Quatre couleurs de cadre.",
+      "tr": "İnce çerçeveli duvar aynası, dikey dalga form. Dört çerçeve rengi."
     },
     "material": "mirror",
     "colors": [
@@ -1455,9 +1552,10 @@ window.AHC_PRODUCTS = [
     "variants": [
       {
         "label": {
-          "fr": "Taille unique",
+          "en": "One size",
           "de": "Einheitsgrösse",
-          "en": "One size"
+          "fr": "Taille unique",
+          "tr": "Tek ölçü"
         },
         "dims": null,
         "price": null

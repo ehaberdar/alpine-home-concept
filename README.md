@@ -29,7 +29,7 @@ instead of "Buy". Current prices are DRAFTS converted from Etsy (GBP × 1.10).
 index.html          home (hero with contour lines, collection, featured, process, reviews)
 collection.html     all products, filter by category (?cat=dining), sort by price
 product.html        one product (?id=leman): gallery, finish, size, buy dialog
-sur-mesure.html     made-to-measure request (opens the visitor's e-mail app)
+custom.html     made-to-measure request (opens the visitor's e-mail app)
 atelier.html        about: Belp, İnegöl workshop, team
 contact.html        contact details
 legal.html          Impressum, privacy, terms of sale

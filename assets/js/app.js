@@ -95,15 +95,15 @@
 
   // Translate a key, filling {placeholders}
   function t(key, vars) {
-    var s = (I18N[lang] && I18N[lang][key]) || I18N.fr[key] || key;
+    var s = (I18N[lang] && I18N[lang][key]) || I18N.en[key] || key;
     if (vars) Object.keys(vars).forEach(function (k) { s = s.split("{" + k + "}").join(vars[k]); });
     return s;
   }
-  function L(obj) { return obj ? (obj[lang] || obj.fr) : ""; }
+  function L(obj) { return obj ? (obj[lang] || obj.en || obj.fr) : ""; }
 
   // Prices: Swiss formatting, whole francs ("CHF 1’245")
   function money(n) {
-    var locale = { fr: "fr-CH", de: "de-CH", en: "en-CH" }[lang];
+    var locale = { en: "en-CH", de: "de-CH", fr: "fr-CH", tr: "tr-TR" }[lang] || "en-CH";
     return new Intl.NumberFormat(locale, { style: "currency", currency: CONFIG.currency, maximumFractionDigits: 0 }).format(n);
   }
   function minPrice(p) {
@@ -181,7 +181,7 @@
 
   var NAV = [
     { href: "collection.html", key: "nav.collection", page: "collection" },
-    { href: "sur-mesure.html", key: "nav.custom", page: "custom" },
+    { href: "custom.html", key: "nav.custom", page: "custom" },
     { href: "atelier.html", key: "nav.atelier", page: "atelier" },
     { href: "contact.html", key: "nav.contact", page: "contact" }
   ];
@@ -236,7 +236,7 @@
           el("h2", { text: t("footer.company") }),
           el("ul", { role: "list" }, [
             el("li", null, [el("a", { href: "atelier.html", text: t("nav.atelier") })]),
-            el("li", null, [el("a", { href: "sur-mesure.html", text: t("nav.custom") })]),
+            el("li", null, [el("a", { href: "custom.html", text: t("nav.custom") })]),
             el("li", null, [el("a", { href: "contact.html", text: t("nav.contact") })]),
             el("li", null, [el("a", { href: "legal.html", text: t("footer.legal") })])
           ])
@@ -444,7 +444,7 @@
     var buy = el("div", { class: "buy" }, [
       hasPrice
         ? el("button", { class: "btn btn-primary btn-block", type: "button", text: t("product.buy"), onclick: function () { openCheckout(p, selectionText); } })
-        : el("a", { class: "btn btn-primary btn-block", href: "sur-mesure.html?product=" + encodeURIComponent(p.id), text: t("product.request") }),
+        : el("a", { class: "btn btn-primary btn-block", href: "custom.html?product=" + encodeURIComponent(p.id), text: t("product.request") }),
       p.etsy ? el("a", { class: "btn btn-ghost btn-block", href: p.etsy, target: "_blank", rel: "noopener noreferrer", text: t("product.etsy") }) : null
     ]);
 
@@ -466,7 +466,7 @@
       el("p", { class: "product-price", text: hasPrice ? money(variant.price) : t("price.onRequest") }),
       hasPrice ? el("p", { class: "small muted price-note", text: t("price.note") }) : el("div", { class: "price-note" }),
       colorSet, variantSet, buy,
-      el("p", { class: "small" }, [el("a", { class: "text-link", href: "sur-mesure.html?product=" + encodeURIComponent(p.id), text: t("product.custom") })]),
+      el("p", { class: "small" }, [el("a", { class: "text-link", href: "custom.html?product=" + encodeURIComponent(p.id), text: t("product.custom") })]),
       specs
     ]);
 
