@@ -408,6 +408,13 @@ dialog::backdrop { background: rgba(31, 37, 38, 0.55); }
 .contact-list { display: grid; grid-template-columns: 9rem minmax(0, 1fr); border-top: 1px solid var(--line); }
 .contact-list dt, .contact-list dd { padding-block: 1rem; border-bottom: 1px solid var(--line); }
 .contact-list dt { color: var(--stone); }
+.contact-list a, .footer-col a { overflow-wrap: anywhere; }
+@media (max-width: 36rem) {
+  /* Stack label above value so long emails/URLs never force sideways scroll */
+  .contact-list { grid-template-columns: minmax(0, 1fr); }
+  .contact-list dt { padding-bottom: 0; border-bottom: 0; }
+  .contact-list dd { padding-top: 0.25rem; }
+}
 .todo { background: #f3e3c3; padding: 0 0.3em; border-radius: 2px; }
 
 /* 12. UTILITY & MOTION ------------------------------------------------------ */
