@@ -145,7 +145,7 @@ async function load(file, query = "", lang = "fr", cur = "CHF", navLangs = null,
   check("non-https link from data is never rendered", ![...d.querySelectorAll("a")].some(a => /^javascript:/i.test(a.getAttribute("href"))));
   ({ d, w } = await load("product.html", "?id=leman", "en", "CHF"));
   check("product meta description is the product text", /^Léman\. /.test(d.querySelector('meta[name="description"]').content));
-  check("known product is indexable", !d.querySelector('meta[name="robots"]'));
+  check("known product gets no extra noindex", !d.querySelector('meta[name="robots"][data-dynamic]'));
   d.querySelector('.gallery-nav button[data-dir="next"]').click();
   check("gallery: arrow keeps focus after click", d.activeElement.getAttribute("data-dir") === "next" && d.querySelector(".gallery-count").textContent.trim() === "2 / 8");
   d.querySelectorAll(".thumbs button")[4].click();
@@ -153,7 +153,7 @@ async function load(file, query = "", lang = "fr", cur = "CHF", navLangs = null,
   d.querySelector(".buy button").click(); d.querySelectorAll(".pay-option")[0].click();
   check("checkout: focus moves to the new heading", d.activeElement.id === "checkout-title");
   ({ d } = await load("product.html", "?id=nope", "en"));
-  check("unknown product is noindex", d.querySelector('meta[name="robots"]').content === "noindex");
+  check("unknown product is noindex", !!d.querySelector('meta[name="robots"][data-dynamic][content="noindex"]'));
   ({ d, w } = await load("index.html", "", "en", "CHF"));
   const de = d.querySelector('.site-header .header-inner > .lang button[lang="de"]'); de.focus(); de.click();
   check("focus stays on the language button after switching", d.activeElement.getAttribute("lang") === "de" && d.activeElement.closest(".header-inner") && d.documentElement.lang === "de");
@@ -186,6 +186,31 @@ async function load(file, query = "", lang = "fr", cur = "CHF", navLangs = null,
   check("legal: TODO marker while company data is missing", /\[à compléter\]/.test(d.getElementById("imprint").textContent));
   ({ d } = await load("legal.html", "", "fr", "CHF", null, hook(w => { w.AHC_CONFIG.company = "Test GmbH"; w.AHC_CONFIG.address = "Weg 1, 3123 Belp"; w.AHC_CONFIG.uid = "CHE-000.000.000"; })));
   check("legal: imprint filled from config", /Test GmbH, Weg 1, 3123 Belp/.test(d.getElementById("imprint").textContent) && !/\[/.test(d.getElementById("imprint").textContent));
+  // boot.js: hides the English fallback only for visitors who get another language
+  const boot = fs.readFileSync(path.join(ROOT, "assets/js/boot.js"), "utf8");
+  const bootCase = (query, saved, navLangs) => {
+    const dom = new JSDOM(fs.readFileSync(path.join(ROOT, "index.html"), "utf8"), { url: "https://example.test/index.html" + query, runScripts: "outside-only" });
+    if (saved) dom.window.localStorage.setItem("ahc-lang", saved);
+    Object.defineProperty(dom.window.navigator, "languages", { value: navLangs });
+    dom.window.eval(boot);
+    return dom.window.document.documentElement;
+  };
+  let root = bootCase("", null, ["de-CH", "en"]);
+  check("boot: German browser hides English fallback", root.classList.contains("i18n-pending") && root.lang === "de");
+  root = bootCase("", null, ["en-US"]);
+  check("boot: English browser shows the page at once", !root.classList.contains("i18n-pending"));
+  root = bootCase("", null, ["ja-JP", "pt"]);
+  check("boot: unsupported language falls back to English at once", !root.classList.contains("i18n-pending") && root.lang === "en");
+  root = bootCase("?lang=tr", "de", ["en-US"]);
+  check("boot: ?lang= wins over saved choice", root.lang === "tr");
+  root = bootCase("?lang=%3Cscript%3E", "fr", ["en-US"]);
+  check("boot: bad ?lang= ignored, saved choice used", root.lang === "fr");
+  for (const [q, saved, nav] of [["", null, ["fr-CH", "de"]], ["?lang=de", "tr", ["en"]], ["", "tr", ["de"]], ["?id=x&lang=fr", null, ["en"]]]) {
+    const r = bootCase(q, saved, nav);
+    const full = await load("index.html", q, saved, "CHF", nav);
+    check(`boot and app agree on language (${q || "-"}, ${saved}, ${nav})`, r.lang === full.d.documentElement.lang);
+    check("app removes the pending class", !full.d.documentElement.classList.contains("i18n-pending"));
+  }
   console.log(out.join("\n"));
   console.log(out.filter(x => x.startsWith("FAIL")).length + " failures / " + out.length);
   if (out.some(x => x.startsWith("FAIL"))) process.exitCode = 1;

@@ -81,7 +81,7 @@ window.AHC_I18N = {
 
     "price.from": "dès {price}",
     "price.onRequest": "Prix sur demande",
-    "price.note": "Prix TTC en francs suisses. Frais de livraison indiqués à la commande.",
+    "price.note": "Prix en francs suisses. Les frais de livraison sont confirmés avant le paiement.",
     "price.noteConverted": "Converti depuis le franc suisse au taux de référence BCE du {date}. Le montant final est confirmé avec votre commande.",
     "currency.label": "Devise",
     "product.colour": "Finition",
@@ -275,7 +275,7 @@ window.AHC_I18N = {
 
     "price.from": "ab {price}",
     "price.onRequest": "Preis auf Anfrage",
-    "price.note": "Preise inkl. MwSt. in Schweizer Franken. Versandkosten werden bei der Bestellung angezeigt.",
+    "price.note": "Preise in Schweizer Franken. Die Lieferkosten werden vor der Zahlung bestätigt.",
     "price.noteConverted": "Umgerechnet aus Schweizer Franken zum EZB-Referenzkurs vom {date}. Der Endbetrag wird mit Ihrer Bestellung bestätigt.",
     "currency.label": "Währung",
     "product.colour": "Oberfläche",
@@ -469,7 +469,7 @@ window.AHC_I18N = {
 
     "price.from": "from {price}",
     "price.onRequest": "Price on request",
-    "price.note": "Prices in Swiss francs, VAT included. Shipping is shown at checkout.",
+    "price.note": "Prices in Swiss francs. The delivery cost is confirmed before you pay.",
     "price.noteConverted": "Converted from Swiss francs at the ECB rate of {date}. The final amount is confirmed with your order.",
     "currency.label": "Currency",
     "product.colour": "Finish",
@@ -663,7 +663,7 @@ window.AHC_I18N = {
 
     "price.from": "başlangıç {price}",
     "price.onRequest": "Fiyat için sorun",
-    "price.note": "Fiyatlar İsviçre frangı, KDV dahil. Kargo ücreti siparişte gösterilir.",
+    "price.note": "Fiyatlar İsviçre frangıdır. Teslimat ücreti ödemeden önce onaylanır.",
     "price.noteConverted": "İsviçre frangından {date} tarihli ECB referans kuruyla çevrildi. Kesin tutar siparişinizle birlikte onaylanır.",
     "currency.label": "Para birimi",
     "product.colour": "Renk",

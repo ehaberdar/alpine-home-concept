@@ -763,6 +763,7 @@
     renderHeader();
     renderFooter();
     if (PAGES[page]) PAGES[page]();
+    document.documentElement.classList.remove("i18n-pending");   // texts are in the right language now (see boot.js)
     document.dispatchEvent(new CustomEvent("ahc:rendered", { detail: { lang: lang } }));
   }
 

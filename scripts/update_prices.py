@@ -84,6 +84,7 @@ def fetch_csv(sheet_id):
             errors.append(f"{url.split(sheet_id)[1]}: {e}")
             continue
         if "csv" in ctype and not body.lstrip().startswith("<"):
+            print("Sheet read via", url.split(sheet_id)[1].split("?")[0])
             return body, None
         errors.append(f"{url.split(sheet_id)[1]}: not CSV ({ctype})")
     return None, "could not read the sheet (is it shared 'Anyone with the link: Viewer'?) " + "; ".join(errors)

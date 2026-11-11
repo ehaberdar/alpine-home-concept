@@ -93,6 +93,19 @@ const orphans = all.filter(f => !refImgs.has(f) && !htmlAll.includes(f));
 if (orphans.length) note("INFO", `orphan images: ${orphans.length} e.g. ${orphans.slice(0, 5).join(", ")}`);
 const sizes = all.map(f => [fs.statSync(path.join(ROOT, f)).size, f]).sort((a, b) => b[0] - a[0]);
 note("INFO", `images: ${all.length} files, largest ${sizes.slice(0, 3).map(s => Math.round(s[0] / 1024) + "KB " + s[1]).join("; ")}; >400KB: ${sizes.filter(s => s[0] > 400e3).length}`);
+// boot.js must know the same languages as config.js, and load first on every page
+const bootSrc = fs.readFileSync(path.join(ROOT, "assets/js/boot.js"), "utf8");
+const bootLangs = JSON.parse((bootSrc.match(/SUPPORTED = (\[[^\]]+\])/) || [0, "[]"])[1]);
+if (bootLangs.join() !== langs.join()) note("ERR", `boot.js languages ${bootLangs} differ from config ${langs}`);
+let previewPages = 0;
+for (const f of htmls) {
+  const h = fs.readFileSync(path.join(ROOT, f), "utf8");
+  const head = h.split("</head>")[0];
+  if (!/<script src="assets\/js\/boot\.js"><\/script>/.test(head)) note("ERR", `${f} does not load boot.js in <head>`);
+  if (/PREVIEW MODE/.test(h)) previewPages++;
+  if (!/rel="apple-touch-icon"/.test(head)) note("WARN", `${f} no apple-touch-icon`);
+}
+if (previewPages) note("WARN", `PREVIEW MODE: ${previewPages} pages are hidden from search engines (noindex). Remove those lines at launch.`);
 // rates
 if (!(R.rates.USD > 0.5 && R.rates.CHF > 0.5)) note("ERR", "rates");
 // config placeholders

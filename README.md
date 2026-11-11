@@ -39,7 +39,9 @@ data/               products.js, config.js, rates.js (exchange rates, auto-updat
 scripts/            update_rates.py (ECB rates)
 .github/workflows/  update-rates.yml (daily rates job)
 assets/css/         main.css
-assets/js/          app.js (site logic), i18n.js (texts), topo.js (hero contours)
+assets/js/          app.js (site logic), i18n.js (texts), topo.js (hero contours),
+                    boot.js (tiny, loads first: hides the English fallback texts for the
+                    split second before a German / French / Turkish visitor's language is applied)
 assets/fonts/       Archivo variable font, self-hosted (OFL licence)
 img/                optimised WebP photos
 ```
@@ -137,6 +139,17 @@ Settings → Pages → Deploy from a branch → `main` / root. The site is then 
 
 ## Before going live (TODO)
 
+- [ ] **Preview mode off.** Six pages carry `<meta name="robots" content="noindex">` with the
+      comment "PREVIEW MODE" so Google does not list the unfinished site. Delete that line (and its
+      comment) in `index.html`, `collection.html`, `product.html`, `custom.html`, `atelier.html`
+      and `contact.html` on launch day. `npm test` prints a warning while it is still there.
+- [ ] **Hosting.** GitHub Pages is fine for the preview, but GitHub does not allow Pages to host
+      an online shop. For the live site use a host that allows business sites and lets us send
+      security headers (Cloudflare Pages or Netlify, both free for this size, both deploy from
+      this repository; or the Infomaniak hosting that comes with the domain). The price and
+      exchange-rate jobs keep working unchanged because they only commit to the repository.
+- [ ] **A mailbox that exists.** Every order and request on the site ends in an e-mail to the
+      address in `data/config.js`. Create it first and send a test message.
 - [ ] Final CHF prices (Cihan, in the Google Sheet)
 - [ ] Real e-mail address and Instagram link (`data/config.js`). Until a real profile is set,
       the Instagram link is hidden automatically.
@@ -146,5 +159,6 @@ Settings → Pages → Deploy from a branch → `main` / root. The site is then 
 - [ ] Mirror sizes and prices
 - [ ] Confirm customs/duties policy for Swiss customers
 - [ ] Confirm the statements on the site: "delivered from Belp" (or shipped directly from the
-      workshop?), "VAT included" (only if VAT-registered), reply times, 14-day returns,
-      delivery in 3 to 15 working days, number of Etsy reviews
+      workshop?), "handmade" and "family workshop", reply times, 14-day returns,
+      delivery in 3 to 15 working days, number of Etsy reviews. If the business is
+      VAT-registered, add "VAT included" back to `price.note` in `assets/js/i18n.js`.

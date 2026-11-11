@@ -103,5 +103,7 @@
   var timer;
   window.addEventListener("resize", function () { clearTimeout(timer); timer = setTimeout(draw, 150); });
   document.addEventListener("ahc:rendered", function () { if (drawn) draw(); });
+  // The web font changes the headline's size a moment after load: realign the lines
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { if (drawn) draw(); });
   ready();
 })();
