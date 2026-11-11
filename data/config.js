@@ -16,5 +16,8 @@ window.AHC_CONFIG = {
 
   defaultLang: "en",            // used when the browser language is not one of the four
   languages: ["en", "de", "fr", "tr"],   // order = order of the language switch
-  currency: "CHF"
+  // Currencies: prices are stored in CHF and converted with data/rates.js
+  currencies: ["USD", "EUR", "CHF"],   // order = order of the currency menu
+  defaultCurrency: "USD",
+  autoCurrency: true                   // true: Swiss visitors see CHF, euro-area visitors EUR
 };

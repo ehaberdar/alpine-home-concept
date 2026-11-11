@@ -1,7 +1,7 @@
 # Alpine Home Concept · website
 
 Static website for Alpine Home Concept (Belp, Switzerland): sculptural coffee tables,
-dining tables and mirrors. French, German and English. No framework, no build step,
+dining tables and mirrors. English, German, French and Turkish; prices in USD, EUR and CHF. No framework, no build step,
 no cookies, no tracking.
 
 ## Edit the site
@@ -10,7 +10,7 @@ no cookies, no tracking.
 |---|---|
 | change a price, add or remove a product | `data/products.js` |
 | change a text (any language) | `assets/js/i18n.js` |
-| change e-mail, Instagram, Etsy links, Impressum data | `data/config.js` |
+| change e-mail, Instagram, Etsy links, Impressum data, languages, currencies | `data/config.js` |
 | change colours, fonts, spacing | top of `assets/css/main.css` (section 2, TOKENS) |
 | change the page structure | the `.html` files (each section has a comment) |
 
@@ -20,7 +20,7 @@ no cookies, no tracking.
    (800 px and 1600 px wide).
 3. Done: it appears in the collection, its category and the search for "made to measure".
 
-**Prices** are in CHF. `price: null` shows "price on request" with a request button
+**Prices** are stored in CHF. `price: null` shows "price on request" with a request button
 instead of "Buy". Current prices are DRAFTS converted from Etsy (GBP × 1.10).
 
 ## Structure
@@ -34,12 +34,27 @@ atelier.html        about: Belp, İnegöl workshop, team
 contact.html        contact details
 legal.html          Impressum, privacy, terms of sale
 404.html            not found
-data/               products.js, config.js
+data/               products.js, config.js, rates.js (exchange rates, auto-updated)
+scripts/            update_rates.py (ECB rates)
+.github/workflows/  update-rates.yml (daily rates job)
 assets/css/         main.css
 assets/js/          app.js (site logic), i18n.js (texts), topo.js (hero contours)
 assets/fonts/       Archivo variable font, self-hosted (OFL licence)
 img/                optimised WebP photos
 ```
+
+## Currencies
+
+Prices are stored once, in CHF. The site shows them in USD (default), EUR or CHF:
+
+- **Conversion:** ECB euro reference rates in `data/rates.js`, rounded to the nearest 5.
+- **Daily update:** `.github/workflows/update-rates.yml` runs `scripts/update_rates.py`
+  every weekday at 17:07 UTC (after the ECB publishes) and commits the new rates.
+  Visitors' browsers never call a rates service, so no visitor data leaves the site.
+- **Automatic choice:** Swiss visitors see CHF, euro-area visitors EUR, everyone else USD.
+  The visitor can switch; the choice is remembered. Turn off with `autoCurrency: false`.
+- **Fixed prices:** to set a price yourself instead of converting, add to a variant
+  `prices: { USD: 399, EUR: 379 }`.
 
 ## Payment
 

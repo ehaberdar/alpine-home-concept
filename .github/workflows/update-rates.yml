@@ -1,0 +1,30 @@
+# Updates data/rates.js with the ECB euro reference rates.
+# ECB publishes around 16:00 CET on working days; this runs at 17:00 UTC Mon-Fri,
+# on every push to main (so a new site gets fresh rates at once), and on demand.
+name: Update exchange rates
+on:
+  schedule:
+    - cron: "7 17 * * 1-5"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths-ignore: ["data/rates.js"]
+permissions:
+  contents: write
+jobs:
+  rates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python scripts/update_rates.py
+      - name: Commit if the rates changed
+        run: |
+          if git diff --quiet data/rates.js; then echo "No change"; exit 0; fi
+          git config user.name "rates-bot"
+          git config user.email "rates-bot@users.noreply.github.com"
+          git add data/rates.js
+          git commit -m "Update exchange rates"
+          git push

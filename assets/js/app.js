@@ -25,9 +25,11 @@
   var I18N = window.AHC_I18N;
   var PRODUCTS = window.AHC_PRODUCTS || [];
   var COLORS = window.AHC_COLORS || {};
+  var RATES = window.AHC_RATES || { rates: { EUR: 1, CHF: 1 } };
   var CATEGORIES = ["sculptural", "coffee-nesting", "side", "dining", "mirrors", "accessories"];
   var page = document.body.getAttribute("data-page");
   var lang = CONFIG.defaultLang;
+  var currency = CONFIG.defaultCurrency;
 
   /* 1. HELPERS ------------------------------------------------------------ */
 
@@ -101,19 +103,44 @@
   }
   function L(obj) { return obj ? (obj[lang] || obj.en || obj.fr) : ""; }
 
-  // Prices: Swiss formatting, whole francs ("CHF 1’245")
-  function money(n) {
-    var locale = { en: "en-CH", de: "de-CH", fr: "fr-CH", tr: "tr-TR" }[lang] || "en-CH";
-    return new Intl.NumberFormat(locale, { style: "currency", currency: CONFIG.currency, maximumFractionDigits: 0 }).format(n);
+  // PRICES -----------------------------------------------------------------
+  // Prices are stored in CHF (data/products.js). Other currencies are converted
+  // with the ECB rates in data/rates.js and rounded to the nearest 5.
+  // A variant can also carry fixed prices: prices: { USD: 399, EUR: 379 }.
+  var LOCALES = { en: "en-US", de: "de-CH", fr: "fr-CH", tr: "tr-TR" };
+  function convert(chf, variant) {
+    if (typeof chf !== "number") return null;
+    if (variant && variant.prices && typeof variant.prices[currency] === "number") return variant.prices[currency];
+    if (currency === "CHF") return chf;
+    var r = RATES.rates;
+    if (!r[currency] || !r.CHF) return null;
+    return Math.round((chf / r.CHF) * r[currency] / 5) * 5;
   }
-  function minPrice(p) {
+  function format(amount) {
+    return new Intl.NumberFormat(LOCALES[lang] || "en-US", { style: "currency", currency: currency, maximumFractionDigits: 0 }).format(amount);
+  }
+  // Display price of a variant in the current currency
+  function money(variant) {
+    var v = convert(variant.price, variant);
+    return v === null ? t("price.onRequest") : format(v);
+  }
+  function minPrice(p) {   // in CHF, used for sorting
     var prices = p.variants.map(function (v) { return v.price; }).filter(function (x) { return typeof x === "number"; });
     return prices.length ? Math.min.apply(null, prices) : null;
   }
-  function priceLabel(p) {
+  function cheapest(p) {
     var m = minPrice(p);
-    if (m === null) return t("price.onRequest");
-    return p.variants.length > 1 ? t("price.from", { price: money(m) }) : money(m);
+    return p.variants.filter(function (v) { return v.price === m; })[0];
+  }
+  function priceLabel(p) {
+    if (minPrice(p) === null) return t("price.onRequest");
+    var label = money(cheapest(p));
+    return p.variants.length > 1 ? t("price.from", { price: label }) : label;
+  }
+  function priceNote() {
+    if (currency === "CHF") return t("price.note");
+    var date = new Intl.DateTimeFormat(LOCALES[lang] || "en-US", { dateStyle: "long" }).format(new Date(RATES.date + "T12:00:00"));
+    return t("price.noteConverted", { date: date });
   }
 
   // Responsive product image: base "img/products/x/1" -> 800 / 1600 px WebP
@@ -142,6 +169,36 @@
     var browser = (navigator.language || "").slice(0, 2);
     var pick = [fromUrl, saved, browser].filter(function (x) { return CONFIG.languages.indexOf(x) > -1; })[0];
     return pick || CONFIG.defaultLang;
+  }
+
+  // Currency: saved choice, else the visitor's region (CH -> CHF, euro area -> EUR), else the default
+  var EURO = ["AT","BE","CY","DE","EE","ES","FI","FR","GR","HR","IE","IT","LT","LU","LV","MT","NL","PT","SI","SK"];
+  function detectCurrency() {
+    var saved = null;
+    try { saved = window.localStorage.getItem("ahc-cur"); } catch (e) { /* ignore */ }
+    if (CONFIG.currencies.indexOf(saved) > -1) return saved;
+    if (CONFIG.autoCurrency) {
+      var tags = (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ""]);
+      for (var i = 0; i < tags.length; i++) {
+        var region = (tags[i].split("-")[1] || "").toUpperCase();
+        if (region === "CH" || region === "LI") return "CHF";
+        if (EURO.indexOf(region) > -1) return "EUR";
+        if (region) break;
+      }
+    }
+    return CONFIG.defaultCurrency;
+  }
+  function setCurrency(next) {
+    if (CONFIG.currencies.indexOf(next) < 0 || next === currency) return;
+    currency = next;
+    try { window.localStorage.setItem("ahc-cur", next); } catch (e) { /* ignore */ }
+    renderAll();
+  }
+  function currencySwitch() {
+    var id = "cur-" + Math.random().toString(36).slice(2, 7);
+    var select = el("select", { id: id, class: "currency-select", onchange: function () { setCurrency(select.value); } },
+      CONFIG.currencies.map(function (c) { return el("option", { value: c, text: c, selected: c === currency }); }));
+    return el("div", { class: "currency" }, [el("label", { for: id, class: "visually-hidden", text: t("currency.label") }), select]);
   }
 
   function setLang(next) {
@@ -197,7 +254,7 @@
           "aria-current": item.page === current ? "page" : null
         })]);
       })),
-      el("div", { class: "nav-lang" }, [langSwitch()])   // language switch inside the mobile menu
+      el("div", { class: "nav-lang" }, [langSwitch(), currencySwitch()])   // switches inside the mobile menu
     ]);
     var toggle = el("button", {
       class: "menu-toggle", type: "button", "aria-expanded": "false", "aria-controls": "site-nav",
@@ -212,7 +269,7 @@
       el("a", { class: "brand", href: "index.html", "aria-label": "Alpine Home Concept, " + t("nav.home") }, [
         brandMark(), el("span", { class: "brand-name", text: "Alpine Home Concept" })
       ]),
-      nav, langSwitch(), toggle
+      nav, langSwitch(), currencySwitch(), toggle
     ]));
   }
 
@@ -253,7 +310,7 @@
       el("div", { class: "footer-bottom" }, [
         el("span", { text: t("footer.payments") }),
         el("span", { text: "© " + year + " Alpine Home Concept, Belp" }),
-        langSwitch()
+        el("div", { class: "footer-switches" }, [langSwitch(), currencySwitch()])
       ])
     ]));
   }
@@ -430,7 +487,7 @@
             onchange: function () { productState.variant = i; renderProduct(); document.getElementById(id).focus(); } }),
           el("label", { for: id }, [
             el("span", { class: "v-name", text: L(v.label) }),
-            el("span", { class: "v-price", text: v.price !== null ? money(v.price) : t("price.onRequest") }),
+            el("span", { class: "v-price", text: money(v) }),
             v.dims ? el("span", { class: "v-dims", text: v.dims }) : null
           ])
         ]);
@@ -438,7 +495,7 @@
     ]) : null;
 
     var hasPrice = typeof variant.price === "number";
-    var selectionText = [p.name, L(COLORS[colorKey] && COLORS[colorKey].label), p.variants.length > 1 ? L(variant.label) : null, variant.dims, hasPrice ? money(variant.price) : null]
+    var selectionText = [p.name, L(COLORS[colorKey] && COLORS[colorKey].label), p.variants.length > 1 ? L(variant.label) : null, variant.dims, hasPrice ? money(variant) : null]
       .filter(Boolean).join("\n");
 
     var buy = el("div", { class: "buy" }, [
@@ -463,8 +520,8 @@
       el("h1", { text: p.name }),
       el("p", { class: "product-cat" }, [el("a", { href: "collection.html?cat=" + p.category, text: t("cat." + p.category) })]),
       el("p", { class: "product-desc", text: L(p.description) }),
-      el("p", { class: "product-price", text: hasPrice ? money(variant.price) : t("price.onRequest") }),
-      hasPrice ? el("p", { class: "small muted price-note", text: t("price.note") }) : el("div", { class: "price-note" }),
+      el("p", { class: "product-price", text: money(variant) }),
+      hasPrice ? el("p", { class: "small muted price-note", text: priceNote() }) : el("div", { class: "price-note" }),
       colorSet, variantSet, buy,
       el("p", { class: "small" }, [el("a", { class: "text-link", href: "custom.html?product=" + encodeURIComponent(p.id), text: t("product.custom") })]),
       specs
@@ -635,6 +692,7 @@
   }
 
   lang = detectLang();
+  currency = detectCurrency();
   renderAll();
   watchScroll();
 })();

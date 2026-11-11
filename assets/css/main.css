@@ -155,6 +155,14 @@ a:hover { text-decoration-color: var(--enzian); }
 }
 .lang button[aria-pressed="true"] { color: var(--granit); text-decoration: underline; text-underline-offset: 0.25em; }
 .nav-lang { display: none; }
+.currency-select {
+  background: transparent; border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 0.3rem 0.4rem; font-size: var(--t-sm); font-weight: 560; cursor: pointer; color: inherit;
+}
+.site-footer .currency-select { border-color: rgba(236, 237, 232, 0.3); }
+.site-footer .currency-select option { color: var(--granit); }
+.footer-switches { display: flex; align-items: center; gap: 1rem; }
+.nav-lang { align-items: center; gap: 1rem; }
 .menu-toggle { display: none; white-space: nowrap; background: none; border: 1px solid var(--line); border-radius: var(--radius); padding: 0.5rem 0.8rem; font-weight: 560; cursor: pointer; }
 
 @media (max-width: 52rem) {
@@ -167,8 +175,8 @@ a:hover { text-decoration-color: var(--enzian); }
   .nav-list { flex-direction: column; gap: 0; }
   .nav-list a { display: block; padding-block: 0.85rem; font-size: var(--t-lg); border-bottom: 1px solid var(--line); }
   .header-inner { gap: 0.75rem; }
-  .header-inner > .lang { display: none; }
-  .nav-lang { display: block; margin-top: 1rem; }
+  .header-inner > .lang, .header-inner > .currency { display: none; }
+  .nav-lang { display: flex; margin-top: 1rem; }
   .brand-name { font-size: 0.875rem; }
 }
 
