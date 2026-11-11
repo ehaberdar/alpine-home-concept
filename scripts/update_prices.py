@@ -70,24 +70,20 @@ def parse_price(raw, where):
 
 
 def fetch_csv(sheet_id):
-    """Download the first tab of the sheet as CSV. Tries the export link first,
-    then the gviz link (both work for 'Anyone with the link: Viewer')."""
-    base = f"https://docs.google.com/spreadsheets/d/{sheet_id}"
-    errors = []
-    for url in (base + "/export?format=csv", base + "/gviz/tq?tqx=out:csv&headers=1"):
-        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 ahc-prices-bot"})
-        try:
-            with urllib.request.urlopen(req, timeout=30) as r:
-                body = r.read().decode("utf-8-sig")
-                ctype = r.headers.get("Content-Type", "")
-        except Exception as e:  # noqa: BLE001
-            errors.append(f"{url.split(sheet_id)[1]}: {e}")
-            continue
-        if "csv" in ctype and not body.lstrip().startswith("<"):
-            print("Sheet read via", url.split(sheet_id)[1].split("?")[0])
-            return body, None
-        errors.append(f"{url.split(sheet_id)[1]}: not CSV ({ctype})")
-    return None, "could not read the sheet (is it shared 'Anyone with the link: Viewer'?) " + "; ".join(errors)
+    """Download the first tab of the sheet as CSV (works for 'Anyone with the link: Viewer').
+    Only the plain export is used: it returns every cell exactly as typed, so a typing
+    mistake is caught by the checks below instead of silently disappearing."""
+    url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv"
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 ahc-prices-bot"})
+    try:
+        with urllib.request.urlopen(req, timeout=30) as r:
+            body = r.read().decode("utf-8-sig")
+            ctype = r.headers.get("Content-Type", "")
+    except Exception as e:  # noqa: BLE001
+        return None, f"could not download the sheet ({e}). Is it shared 'Anyone with the link: Viewer'?"
+    if "csv" not in ctype or body.lstrip().startswith("<"):
+        return None, "the sheet did not come back as a table. Is it shared 'Anyone with the link: Viewer'?"
+    return body, None
 
 
 def build(rows, catalogue, previous):
