@@ -1,0 +1,7 @@
+{
+  "name": "alpine-home-concept-tests",
+  "private": true,
+  "description": "Automatic checks for the site. Not part of the website itself.",
+  "scripts": { "test": "node audit.js && node smoke.js" },
+  "devDependencies": { "jsdom": "24.1.3" }
+}

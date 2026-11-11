@@ -4,7 +4,7 @@
   <!-- ===== HEAD: same block on every page (security, fonts, styles) ===== -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; connect-src 'self'; form-action 'self' mailto:; base-uri 'self'; object-src 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; connect-src 'self'; form-action 'self' mailto:; base-uri 'self'; object-src 'none'; require-trusted-types-for 'script'; trusted-types 'none'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Collection · Alpine Home Concept</title>
   <meta name="description" content="Sculptural coffee tables, dining tables and mirrors, handmade, selected and delivered from Belp, Switzerland.">
@@ -15,7 +15,10 @@
 </head>
 <body data-page="collection">
   <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
-  <header id="site-header" class="site-header"></header>
+  <header id="site-header" class="site-header">
+    <!-- Plain links for visitors without JavaScript; app.js replaces this with the real menu -->
+    <noscript><div class="wrap noscript-nav"><a href="index.html">Alpine Home Concept</a><a href="collection.html">Collection</a><a href="custom.html">Made to measure</a><a href="atelier.html">Atelier</a><a href="contact.html">Contact</a><a href="legal.html">Legal notice</a></div></noscript>
+  </header>
 
   <main id="main">
     <!-- ===== PAGE HEAD ===== -->
@@ -38,6 +41,7 @@
       </div>
       <p id="result-count" class="small muted visually-hidden" aria-live="polite"></p>
       <div id="tiles" class="tiles"></div>
+      <noscript><p class="notice noscript-note">The product list needs JavaScript. You can also see every piece in our <a href="https://www.etsy.com/shop/AlpineHomeConcept" rel="noopener noreferrer">Etsy shop</a>.</p></noscript>
       <p id="empty" class="empty" data-i18n="collection.empty" hidden>No models in this category yet.</p>
     </div>
   </main>

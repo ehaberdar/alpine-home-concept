@@ -25,7 +25,10 @@
   var I18N = window.AHC_I18N;
   var PRODUCTS = window.AHC_PRODUCTS || [];
   var COLORS = window.AHC_COLORS || {};
-  var RATES = window.AHC_RATES || { rates: { EUR: 1, CHF: 1 } };
+  var RATES = window.AHC_RATES || {};
+  // Conversion is only offered when the rates file is complete and sane
+  var RATES_OK = !!(RATES.rates && RATES.rates.CHF > 0.2 && RATES.rates.USD > 0.2 && RATES.rates.CHF < 5 && RATES.rates.USD < 5 &&
+    /^\d{4}-\d{2}-\d{2}$/.test(RATES.date || ""));
   var CATEGORIES = ["sculptural", "coffee-nesting", "side", "dining", "mirrors", "accessories"];
   // Prices from the Google Sheet (data/prices.js) override products.js.
   // Only plain positive whole numbers are accepted; anything else is ignored.
@@ -130,10 +133,10 @@
   function convert(chf, variant) {
     if (typeof chf !== "number") return null;
     if (variant && variant.prices && typeof variant.prices[currency] === "number") return variant.prices[currency];
-    if (currency === "CHF") return chf;
+    if (currency === "CHF" || !RATES_OK) return chf;
     var r = RATES.rates;
-    if (!r[currency] || !r.CHF) return null;
-    return Math.round((chf / r.CHF) * r[currency] / 5) * 5;
+    var rate = currency === "EUR" ? 1 : r[currency];
+    return Math.round((chf / r.CHF) * rate / 5) * 5;
   }
   function format(amount) {
     return new Intl.NumberFormat(LOCALES[lang] || "en-US", { style: "currency", currency: currency, maximumFractionDigits: 0 }).format(amount);
@@ -157,7 +160,7 @@
     return p.variants.length > 1 ? t("price.from", { price: label }) : label;
   }
   function priceNote() {
-    if (currency === "CHF") return t("price.note");
+    if (currency === "CHF" || !RATES_OK) return t("price.note");
     var date = new Intl.DateTimeFormat(LOCALES[lang] || "en-US", { dateStyle: "long" }).format(new Date(RATES.date + "T12:00:00"));
     return t("price.noteConverted", { date: date });
   }
@@ -174,6 +177,15 @@
     });
   }
 
+  // <meta name="robots" content="noindex"> on pages that should not be indexed
+  function setRobots(noindex) {
+    var m = document.querySelector('meta[name="robots"][data-dynamic]');
+    if (noindex && !m) {
+      m = el("meta", { name: "robots", content: "noindex", "data-dynamic": true });
+      document.head.appendChild(m);
+    } else if (!noindex && m) { m.parentNode.removeChild(m); }
+  }
+
   function param(name) { return new URLSearchParams(window.location.search).get(name); }
   function byId(id) { return PRODUCTS.filter(function (p) { return p.id === id; })[0] || null; }
   function countLabel(n) { return t(n === 1 ? "count.one" : "count.many", { n: n }); }
@@ -185,8 +197,10 @@
     var fromUrl = param("lang");
     var saved = null;
     try { saved = window.localStorage.getItem("ahc-lang"); } catch (e) { /* storage blocked: ignore */ }
-    var browser = (navigator.language || "").slice(0, 2);
-    var pick = [fromUrl, saved, browser].filter(function (x) { return CONFIG.languages.indexOf(x) > -1; })[0];
+    // Browser languages in the visitor's order of preference: "fr-CH" -> "fr"
+    var browser = (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ""])
+      .map(function (tag) { return String(tag).slice(0, 2).toLowerCase(); });
+    var pick = [fromUrl, saved].concat(browser).filter(function (x) { return CONFIG.languages.indexOf(x) > -1; })[0];
     return pick || CONFIG.defaultLang;
   }
 
@@ -195,6 +209,7 @@
   function detectCurrency() {
     var saved = null;
     try { saved = window.localStorage.getItem("ahc-cur"); } catch (e) { /* ignore */ }
+    if (!RATES_OK) return "CHF";                      // no rates: show the real CHF prices
     if (CONFIG.currencies.indexOf(saved) > -1) return saved;
     if (CONFIG.autoCurrency) {
       var tags = (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ""]);
@@ -209,22 +224,43 @@
   }
   function setCurrency(next) {
     if (CONFIG.currencies.indexOf(next) < 0 || next === currency) return;
+    var back = rememberFocus();
     currency = next;
     try { window.localStorage.setItem("ahc-cur", next); } catch (e) { /* ignore */ }
     renderAll();
+    back();
+  }
+
+  // Switching language or currency rebuilds header and footer. Remember which
+  // switch had the keyboard focus and give it back afterwards.
+  function rememberFocus() {
+    var a = document.activeElement;
+    var zone = a && a.closest ? a.closest(".nav-lang, .footer-switches, .header-inner") : null;
+    if (!zone) return function () {};
+    var zoneSel = zone.classList.contains("nav-lang") ? ".nav-lang" : zone.classList.contains("footer-switches") ? ".footer-switches" : ".header-inner > ";
+    var isSelect = a.tagName === "SELECT";
+    var code = a.getAttribute("lang");
+    return function () {
+      var target = document.querySelector(isSelect
+        ? (zoneSel === ".header-inner > " ? ".header-inner > .currency select" : zoneSel + " select")
+        : (zoneSel === ".header-inner > " ? '.header-inner > .lang button[lang="' + code + '"]' : zoneSel + ' .lang button[lang="' + code + '"]'));
+      if (target) target.focus({ preventScroll: true });
+    };
   }
   function currencySwitch() {
     var id = "cur-" + Math.random().toString(36).slice(2, 7);
     var select = el("select", { id: id, class: "currency-select", onchange: function () { setCurrency(select.value); } },
-      CONFIG.currencies.map(function (c) { return el("option", { value: c, text: c, selected: c === currency }); }));
+      (RATES_OK ? CONFIG.currencies : ["CHF"]).map(function (c) { return el("option", { value: c, text: c, selected: c === currency }); }));
     return el("div", { class: "currency" }, [el("label", { for: id, class: "visually-hidden", text: t("currency.label") }), select]);
   }
 
   function setLang(next) {
     if (CONFIG.languages.indexOf(next) < 0 || next === lang) return;
+    var back = rememberFocus();
     lang = next;
     try { window.localStorage.setItem("ahc-lang", next); } catch (e) { /* ignore */ }
     renderAll();
+    back();
   }
 
   // Fill every [data-i18n] / [data-i18n-attr] element on the page
@@ -262,11 +298,18 @@
     { href: "contact.html", key: "nav.contact", page: "contact" }
   ];
 
+  var menuOpen = false;   // mobile menu state, kept when the header is rebuilt
+
+  // Only https links from the data files become external links
+  function safeUrl(u) { return typeof u === "string" && /^https:\/\/[^\s"'<>]+$/.test(u) ? u : null; }
+  // A real profile URL, not just the bare site (placeholder in config.js)
+  function profileUrl(u) { return safeUrl(u) && !/^https:\/\/(www\.)?[a-z]+\.com\/?$/.test(u) ? u : null; }
+
   function renderHeader() {
     var host = document.getElementById("site-header");
     if (!host) return;
     var current = page === "product" ? "collection" : page;
-    var nav = el("nav", { class: "site-nav", id: "site-nav", "aria-label": t("nav.menu") }, [
+    var nav = el("nav", { class: "site-nav" + (menuOpen ? " is-open" : ""), id: "site-nav", "aria-label": t("nav.menu") }, [
       el("ul", { class: "nav-list", role: "list" }, NAV.map(function (item) {
         return el("li", null, [el("a", {
           href: item.href, text: t(item.key),
@@ -276,14 +319,19 @@
       el("div", { class: "nav-lang" }, [langSwitch(), currencySwitch()])   // switches inside the mobile menu
     ]);
     var toggle = el("button", {
-      class: "menu-toggle", type: "button", "aria-expanded": "false", "aria-controls": "site-nav",
-      text: t("nav.menu"),
-      onclick: function () {
-        var open = nav.classList.toggle("is-open");
-        toggle.setAttribute("aria-expanded", String(open));
-        toggle.textContent = open ? t("nav.close") : t("nav.menu");
-      }
+      class: "menu-toggle", type: "button", "aria-expanded": String(menuOpen), "aria-controls": "site-nav",
+      text: menuOpen ? t("nav.close") : t("nav.menu"),
+      onclick: function () { setMenu(!menuOpen); }
     });
+    function setMenu(open) {
+      menuOpen = open;
+      nav.classList.toggle("is-open", open);
+      toggle.setAttribute("aria-expanded", String(open));
+      toggle.textContent = open ? t("nav.close") : t("nav.menu");
+    }
+    host.onkeydown = function (e) {          // Escape closes the mobile menu
+      if (e.key === "Escape" && menuOpen) { setMenu(false); toggle.focus(); }
+    };
     clear(host).appendChild(el("div", { class: "wrap header-inner" }, [
       el("a", { class: "brand", href: "index.html", "aria-label": "Alpine Home Concept, " + t("nav.home") }, [
         brandMark(), el("span", { class: "brand-name", text: "Alpine Home Concept" })
@@ -321,8 +369,8 @@
           el("h2", { text: t("nav.contact") }),
           el("ul", { role: "list" }, [
             el("li", null, [el("a", { href: "mailto:" + CONFIG.email, text: CONFIG.email })]),
-            el("li", null, [el("a", { href: CONFIG.etsyShop, rel: "noopener noreferrer", target: "_blank", text: "Etsy" })]),
-            el("li", null, [el("a", { href: CONFIG.instagram, rel: "noopener noreferrer", target: "_blank", text: "Instagram" })])
+            safeUrl(CONFIG.etsyShop) ? el("li", null, [el("a", { href: CONFIG.etsyShop, rel: "noopener noreferrer", target: "_blank", text: "Etsy" })]) : null,
+            profileUrl(CONFIG.instagram) ? el("li", null, [el("a", { href: CONFIG.instagram, rel: "noopener noreferrer", target: "_blank", text: "Instagram" })]) : null
           ])
         ])
       ]),
@@ -445,33 +493,38 @@
     var host = document.getElementById("product");
     var p = byId(param("id"));
     clear(host);
+    setRobots(!p);                                   // unknown product: keep it out of search results
     if (!p) {
       document.title = t("meta.404");
       host.appendChild(el("div", { class: "wrap" }, [
         el("h1", { class: "h2", text: t("product.notFound") }),
-        el("p", { class: "small", style: null }, [el("a", { class: "text-link", href: "collection.html", text: t("product.back") })])
+        el("p", { class: "small" }, [el("a", { class: "text-link", href: "collection.html", text: t("product.back") })])
       ]));
       return;
     }
     document.title = t("meta.product", { name: p.name });
+    var desc = document.querySelector('meta[name="description"]');
+    if (desc) desc.setAttribute("content", p.name + ". " + L(p.description));
+    var etsyUrl = safeUrl(p.etsy);
     var variant = p.variants[productState.variant] || p.variants[0];
     var colorKey = p.colors[productState.color] || p.colors[0];
 
     // Gallery
     var mainImg = picture(p.images[productState.image], p.name + ", " + t("product.photo", { n: productState.image + 1, total: p.images.length }), "(max-width: 64rem) 100vw, 58vw", true);
     var count = el("span", { class: "gallery-count", "aria-live": "polite", text: (productState.image + 1) + " / " + p.images.length });
-    function show(i) {
+    // from = "prev" / "next" when an arrow was used: the same arrow keeps the focus
+    function show(i, from) {
       productState.image = (i + p.images.length) % p.images.length;
       renderProduct();
-      var b = document.querySelector('.thumbs button[aria-current="true"]');
+      var b = document.querySelector(from ? '.gallery-nav button[data-dir="' + from + '"]' : '.thumbs button[aria-current="true"]');
       if (b) b.focus({ preventScroll: true });
     }
     var gallery = el("div", { class: "gallery" }, [
       el("div", { class: "gallery-main" }, [
         mainImg, count,
         p.images.length > 1 ? el("div", { class: "gallery-nav" }, [
-          el("button", { type: "button", "aria-label": t("product.prev"), onclick: function () { show(productState.image - 1); } }, [icon("prev")]),
-          el("button", { type: "button", "aria-label": t("product.next"), onclick: function () { show(productState.image + 1); } }, [icon("next")])
+          el("button", { type: "button", "data-dir": "prev", "aria-label": t("product.prev"), onclick: function () { show(productState.image - 1, "prev"); } }, [icon("prev")]),
+          el("button", { type: "button", "data-dir": "next", "aria-label": t("product.next"), onclick: function () { show(productState.image + 1, "next"); } }, [icon("next")])
         ]) : null
       ]),
       p.images.length > 1 ? el("div", { class: "thumbs" }, p.images.map(function (src, i) {
@@ -521,7 +574,7 @@
       hasPrice
         ? el("button", { class: "btn btn-primary btn-block", type: "button", text: t("product.buy"), onclick: function () { openCheckout(p, selectionText); } })
         : el("a", { class: "btn btn-primary btn-block", href: "custom.html?product=" + encodeURIComponent(p.id), text: t("product.request") }),
-      p.etsy ? el("a", { class: "btn btn-ghost btn-block", href: p.etsy, target: "_blank", rel: "noopener noreferrer", text: t("product.etsy") }) : null
+      etsyUrl ? el("a", { class: "btn btn-ghost btn-block", href: etsyUrl, target: "_blank", rel: "noopener noreferrer", text: t("product.etsy") }) : null
     ]);
 
     var specs = el("section", { class: "specs", "aria-labelledby": "specs-h" }, [
@@ -547,7 +600,7 @@
     ]);
 
     host.appendChild(el("div", { class: "wrap" }, [
-      el("nav", { class: "crumbs", "aria-label": "Breadcrumb" }, [
+      el("nav", { class: "crumbs", "aria-label": t("nav.breadcrumb") }, [
         el("a", { href: "collection.html", text: t("nav.collection") }), " / ",
         el("a", { href: "collection.html?cat=" + p.category, text: t("cat." + p.category) })
       ]),
@@ -559,6 +612,7 @@
     var rel = document.getElementById("related");
     if (rel) {
       clear(rel);
+      rel.setAttribute("aria-label", t("product.related"));
       if (related.length) {
         rel.appendChild(el("div", { class: "wrap" }, [
           el("h2", { class: "h2", text: t("product.related") }),
@@ -623,9 +677,9 @@
   function renderContact() {
     var dl = clear(document.getElementById("contact-list"));
     [["contact.email", el("a", { href: "mailto:" + CONFIG.email, text: CONFIG.email })],
-     ["contact.instagram", el("a", { href: CONFIG.instagram, target: "_blank", rel: "noopener noreferrer", text: "Instagram" })],
-     ["contact.etsy", el("a", { href: CONFIG.etsyShop, target: "_blank", rel: "noopener noreferrer", text: "AlpineHomeConcept" })]]
-      .forEach(function (row) { dl.appendChild(el("dt", { text: t(row[0]) })); dl.appendChild(el("dd", null, [row[1]])); });
+     profileUrl(CONFIG.instagram) ? ["contact.instagram", el("a", { href: CONFIG.instagram, target: "_blank", rel: "noopener noreferrer", text: "Instagram" })] : null,
+     safeUrl(CONFIG.etsyShop) ? ["contact.etsy", el("a", { href: CONFIG.etsyShop, target: "_blank", rel: "noopener noreferrer", text: "AlpineHomeConcept" })] : null]
+      .filter(Boolean).forEach(function (row) { dl.appendChild(el("dt", { text: t(row[0]) })); dl.appendChild(el("dd", null, [row[1]])); });
   }
 
   // LEGAL -----------------------------------------------------------------
@@ -640,7 +694,9 @@
   // ATELIER: mirror shop link
   function renderAtelier() {
     var a = document.getElementById("mirror-link");
-    if (a) a.setAttribute("href", CONFIG.mirrorShop);
+    if (!a) return;
+    if (safeUrl(CONFIG.mirrorShop)) a.setAttribute("href", CONFIG.mirrorShop);
+    else a.parentNode.hidden = true;
   }
 
   /* 5. CHECKOUT DIALOG ---------------------------------------------------- */
@@ -665,14 +721,14 @@
 
     function stepPending(method) {
       clear(body);
-      body.appendChild(el("h2", { id: "checkout-title", text: t("checkout.pendingTitle") }));
+      body.appendChild(el("h2", { id: "checkout-title", tabindex: "-1", text: t("checkout.pendingTitle") }));
       body.appendChild(el("p", { text: t("checkout.pendingText", { method: method }) }));
       body.appendChild(el("div", { class: "selection", "aria-label": t("checkout.selection"), text: selectionText }));
       var mail = "mailto:" + CONFIG.email + "?subject=" + encodeURIComponent(t("checkout.mailSubject", { name: p.name })) +
         "&body=" + encodeURIComponent(t("checkout.mailBody", { selection: selectionText }));
       body.appendChild(el("div", { class: "dialog-actions" }, [
-        p.etsy ? el("a", { class: "btn btn-primary", href: p.etsy, target: "_blank", rel: "noopener noreferrer", text: t("checkout.etsy") }) : null,
-        el("a", { class: p.etsy ? "btn btn-ghost" : "btn btn-primary", href: mail, text: t("checkout.email") })
+        safeUrl(p.etsy) ? el("a", { class: "btn btn-primary", href: p.etsy, target: "_blank", rel: "noopener noreferrer", text: t("checkout.etsy") }) : null,
+        el("a", { class: safeUrl(p.etsy) ? "btn btn-ghost" : "btn btn-primary", href: mail, text: t("checkout.email") })
       ]));
       // Address also as plain text: mailto links do not open in every browser
       body.appendChild(el("p", { class: "small muted dialog-mail", text: CONFIG.email }));
@@ -710,8 +766,22 @@
     document.dispatchEvent(new CustomEvent("ahc:rendered", { detail: { lang: lang } }));
   }
 
+  // "Skip to content": move the keyboard focus to <main> (also correct on the
+  // 404 page, where a <base> tag would otherwise send "#main" to the home page)
+  function bindSkipLink() {
+    var link = document.querySelector(".skip-link");
+    var main = document.getElementById("main");
+    if (!link || !main) return;
+    link.addEventListener("click", function (e) {
+      e.preventDefault();
+      main.setAttribute("tabindex", "-1");
+      main.focus();
+    });
+  }
+
   lang = detectLang();
   currency = detectCurrency();
   renderAll();
   watchScroll();
+  bindSkipLink();
 })();

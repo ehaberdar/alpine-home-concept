@@ -17,12 +17,10 @@ env:
 jobs:
   prices:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - run: python scripts/update_prices.py
+      - uses: actions/checkout@v5
+      - run: python3 scripts/update_prices.py
       - name: Commit if the prices changed
         run: |
           git add -N data/prices.js 2>/dev/null || true

@@ -44,6 +44,7 @@
   --enzian: #24408e;      /* gentian blue: primary actions */
   --enzian-deep: #172d6b; /* hover / pressed */
   --line: rgba(31, 37, 38, 0.16);
+  --line-strong: rgba(31, 37, 38, 0.56);  /* borders of inputs and buttons: 3:1 on the background (WCAG 1.4.11) */
 
   --font: "Archivo", "Helvetica Neue", Arial, sans-serif;
   --wide: 125%;           /* display width */
@@ -135,6 +136,7 @@ a:hover { text-decoration-color: var(--enzian); }
 /* 6. HEADER & NAVIGATION ---------------------------------------------------- */
 .site-header {
   position: sticky; top: 0; z-index: 50;
+  background: var(--kalk);                                   /* fallback for older browsers */
   background: color-mix(in srgb, var(--kalk) 92%, transparent);
   backdrop-filter: saturate(1.2) blur(10px);
   border-bottom: 1px solid transparent;
@@ -164,20 +166,22 @@ a:hover { text-decoration-color: var(--enzian); }
 .lang button[aria-pressed="true"] { color: var(--granit); text-decoration: underline; text-underline-offset: 0.25em; }
 .nav-lang { display: none; }
 .currency-select {
-  background: transparent; border: 1px solid var(--line); border-radius: var(--radius);
+  background: transparent; border: 1px solid var(--line-strong); border-radius: var(--radius);
   padding: 0.3rem 0.4rem; font-size: var(--t-sm); font-weight: 560; cursor: pointer; color: inherit;
 }
-.site-footer .currency-select { border-color: rgba(236, 237, 232, 0.3); }
+.site-footer .currency-select { border-color: rgba(236, 237, 232, 0.55); }
 .site-footer .currency-select option { color: var(--granit); }
 .footer-switches { display: flex; align-items: center; gap: 1rem; }
 .nav-lang { align-items: center; gap: 1rem; }
-.menu-toggle { display: none; white-space: nowrap; background: none; border: 1px solid var(--line); border-radius: var(--radius); padding: 0.5rem 0.8rem; font-weight: 560; cursor: pointer; }
+.menu-toggle { display: none; white-space: nowrap; background: none; border: 1px solid var(--line-strong); border-radius: var(--radius); padding: 0.5rem 0.8rem; font-weight: 560; cursor: pointer; }
 
 @media (max-width: 52rem) {
   .menu-toggle { display: inline-flex; }
   .site-nav {
     position: fixed; inset: var(--header-h) 0 auto 0; background: var(--kalk);
     border-bottom: 1px solid var(--line); padding: 1rem var(--margin) 1.5rem; display: none;
+    /* phone held sideways: the menu scrolls instead of running off the screen */
+    max-height: calc(100vh - var(--header-h)); max-height: calc(100dvh - var(--header-h)); overflow-y: auto;
   }
   .site-nav.is-open { display: block; }
   .nav-list { flex-direction: column; gap: 0; }
@@ -298,15 +302,17 @@ a:hover { text-decoration-color: var(--enzian); }
 .page-head { padding-block: clamp(2.5rem, 6vw, 5rem) clamp(2rem, 4vw, 3rem); }
 .page-head .display { margin-bottom: 1.25rem; }
 .controls { display: flex; flex-wrap: wrap; gap: 1rem 2rem; align-items: center; justify-content: space-between; padding-block: 1rem; border-block: 1px solid var(--line); margin-bottom: clamp(2rem, 4vw, 3rem); position: sticky; top: var(--header-h); background: var(--kalk); z-index: 10; }
+/* On phones and tablets the filter bar is tall: let it scroll away with the page */
+@media (max-width: 64rem) { .controls { position: static; } }
 .chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
 .chip {
-  background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: 0.45rem 0.95rem;
+  background: transparent; border: 1px solid var(--line-strong); border-radius: 999px; padding: 0.45rem 0.95rem;
   font-size: var(--t-sm); font-weight: 520; cursor: pointer; color: var(--granit);
 }
 .chip:hover { border-color: var(--granit); }
 .chip[aria-pressed="true"] { background: var(--granit); border-color: var(--granit); color: var(--kalk); }
 .sort { display: flex; align-items: center; gap: 0.6rem; font-size: var(--t-sm); }
-.sort select { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 0.45rem 0.7rem; }
+.sort select { background: var(--paper); border: 1px solid var(--line-strong); border-radius: var(--radius); padding: 0.45rem 0.7rem; }
 .empty { padding-block: 4rem; color: var(--stone); }
 
 /* 10. PRODUCT PAGE ---------------------------------------------------------- */
@@ -346,6 +352,7 @@ legend .chosen { font-weight: 400; color: var(--stone); }
 .swatches { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 .swatch input, .variant input { position: absolute; opacity: 0; width: 1px; height: 1px; }
 .swatch label { display: block; width: 2.25rem; height: 2.25rem; border-radius: 50%; cursor: pointer; border: 1px solid var(--line); box-shadow: inset 0 0 0 3px var(--kalk); }
+@media (forced-colors: active) { .swatch label { forced-color-adjust: none; } }   /* keep the colour dot in high-contrast mode */
 .swatch input:checked + label { box-shadow: inset 0 0 0 3px var(--kalk), 0 0 0 2px var(--granit); border-color: transparent; }
 .swatch input:focus-visible + label { outline: 2px solid var(--enzian); outline-offset: 3px; }
 .variants { display: grid; border-top: 1px solid var(--line); }
@@ -369,7 +376,7 @@ legend .chosen { font-weight: 400; color: var(--stone); }
 .field label { font-size: var(--t-sm); font-weight: 600; }
 .field .hint { font-size: var(--t-xs); color: var(--stone); }
 .field input, .field select, .field textarea {
-  width: 100%; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
+  width: 100%; background: var(--paper); border: 1px solid var(--line-strong); border-radius: var(--radius);
   padding: 0.75rem 0.9rem; min-height: 3rem;
 }
 .field textarea { min-height: 9rem; resize: vertical; }
@@ -390,7 +397,7 @@ dialog::backdrop { background: rgba(31, 37, 38, 0.55); }
 .dialog-close { position: absolute; top: 0.9rem; right: 0.9rem; width: 2.5rem; height: 2.5rem; border: 0; background: none; cursor: pointer; border-radius: var(--radius); display: grid; place-items: center; }
 .dialog-close svg { width: 1.1rem; height: 1.1rem; }
 .pay-options { display: grid; gap: 0.5rem; margin-top: 1.25rem; }
-.pay-option { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 1rem 1.1rem; background: var(--kalk); border: 1px solid var(--line); border-radius: var(--radius); cursor: pointer; font-weight: 560; text-align: left; }
+.pay-option { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 1rem 1.1rem; background: var(--kalk); border: 1px solid var(--line-strong); border-radius: var(--radius); cursor: pointer; font-weight: 560; text-align: left; }
 .pay-option:hover { border-color: var(--granit); }
 .pay-option span:last-child { color: var(--stone); font-weight: 400; font-size: var(--t-sm); }
 .selection { margin-block: 1.25rem; padding: 1rem; background: var(--kalk); font-size: var(--t-sm); white-space: pre-line; }
@@ -424,6 +431,16 @@ dialog::backdrop { background: rgba(31, 37, 38, 0.55); }
   .contact-list dd { padding-top: 0.25rem; }
 }
 .todo { background: #f3e3c3; padding: 0 0.3em; border-radius: 2px; }
+/* Shown only when JavaScript is off (plain links instead of the built menu) */
+.noscript-nav { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; align-items: center; padding-block: 1rem; font-size: var(--t-sm); }
+.noscript-nav a:first-child { font-weight: 600; margin-right: auto; text-decoration: none; }
+.noscript-note { margin-block: 2rem; }
+
+/* Print: content only */
+@media print {
+  .site-header, .site-footer, .skip-link, .hero-contours, .gallery-nav, .controls, .buy, dialog { display: none !important; }
+  body { background: #fff; }
+}
 
 /* 12. UTILITY & MOTION ------------------------------------------------------ */
 .visually-hidden { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }

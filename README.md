@@ -93,23 +93,58 @@ Stripe Payment Links, which needs no server.
 ## Security and privacy
 
 - Content-Security-Policy on every page: only this site's own scripts, styles, fonts, images.
-- All dynamic text is inserted with `textContent`; URL parameters are checked against known values.
+  It also switches on Trusted Types, so the browser itself refuses any code that tries to
+  write HTML from a text string (the usual route for script injection).
+- All dynamic text is inserted with `textContent`; URL parameters are checked against known values;
+  links from the data files are only rendered when they start with `https://`.
 - External links use `rel="noopener noreferrer"`.
 - No cookies, no analytics, no third-party requests (fonts are self-hosted, nLPD/GDPR friendly).
 - Forms store nothing: they prepare an e-mail in the visitor's mail app.
+- The two robots (rates, prices) can only write `data/rates.js` and `data/prices.js`, and both
+  refuse values that look wrong (text instead of numbers, a jump of more than 10 % in a rate,
+  half the prices suddenly empty).
+- Limits of GitHub Pages: it cannot send security headers (no HSTS on a custom domain,
+  no `X-Frame-Options`). Fine for a catalogue site. Before real online payment goes live,
+  put the site behind Cloudflare (free) or move it to Cloudflare Pages / Netlify to add them.
+
+## Tests
+
+`tests/` holds the automatic checks; the **Check site** Action runs them after every change
+(a red cross on a commit = something is broken, GitHub also sends an e-mail).
+
+```
+cd tests && npm install && npm test
+```
+
+- `audit.js`: every product complete, every photo present in both sizes, every text translated
+  in the four languages, every link pointing to an existing page.
+- `smoke.js`: opens every page without a browser and checks menus, languages, currencies,
+  filters, gallery, the payment dialog, the form and the safety rules.
 
 ## Publish (GitHub Pages)
 
 Settings → Pages → Deploy from a branch → `main` / root. The site is then live at
-`https://<user>.github.io/<repo>/`. A custom domain (e.g. alpinehomeconcept.ch) is added
-in the same screen plus a CNAME record at the domain registrar.
+`https://<user>.github.io/<repo>/`.
+
+### When the site moves to its own domain
+
+1. GitHub → Settings → Pages → Custom domain, then the DNS records at the registrar
+   (four A records to GitHub for the bare domain, a CNAME for `www`). Tick "Enforce HTTPS".
+2. `404.html`: change `<base href="/alpine-home-concept/">` to `<base href="/">`.
+3. `index.html`: replace the address in `og:image` with the new domain.
+4. Then add for search engines: `robots.txt`, `sitemap.xml`, a canonical link per page and
+   `hreflang` links using `?lang=de` / `?lang=fr` / `?lang=tr` (the pages already answer to them).
 
 ## Before going live (TODO)
 
-- [ ] Final CHF prices (Cihan)
-- [ ] Real e-mail address and Instagram link (`data/config.js`)
+- [ ] Final CHF prices (Cihan, in the Google Sheet)
+- [ ] Real e-mail address and Instagram link (`data/config.js`). Until a real profile is set,
+      the Instagram link is hidden automatically.
 - [ ] Impressum: legal name, address, UID (`data/config.js`)
 - [ ] Written permission from Bimobilia to use the catalogue photos
 - [ ] Confirm materials: Belp C-leg (solid walnut or lacquered MDF), Arosa (solid beech or panel)
 - [ ] Mirror sizes and prices
 - [ ] Confirm customs/duties policy for Swiss customers
+- [ ] Confirm the statements on the site: "delivered from Belp" (or shipped directly from the
+      workshop?), "VAT included" (only if VAT-registered), reply times, 14-day returns,
+      delivery in 3 to 15 working days, number of Etsy reviews

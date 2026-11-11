@@ -17,12 +17,10 @@ concurrency:
 jobs:
   rates:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - run: python scripts/update_rates.py
+      - uses: actions/checkout@v5
+      - run: python3 scripts/update_rates.py
       - name: Commit if the rates changed
         run: |
           if git diff --quiet data/rates.js; then echo "No change"; exit 0; fi

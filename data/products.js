@@ -9,7 +9,7 @@
    - id          unique, lowercase, used in the URL: product.html?id=<id>
    - name        display name (same in all languages)
    - category    sculptural | coffee-nesting | side | dining | mirrors | accessories
-   - featured    true = shown on the home page
+   - featured    marks the showpieces (the three on the home page are set in app.js, renderHome)
    - description short text in en / de / fr / tr
    - material    key of a material text in assets/js/i18n.js (material.*)
    - colors      keys of AHC_COLORS below
@@ -774,7 +774,7 @@ window.AHC_PRODUCTS = [
           "fr": "Taille unique",
           "tr": "Tek ölçü"
         },
-        "dims": "100 × 48 × 52",
+        "dims": "100 × 48 × 52 cm",
         "price": null
       }
     ],

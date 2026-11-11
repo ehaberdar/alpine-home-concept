@@ -4,13 +4,17 @@
   <!-- ===== HEAD: same block on every page (security, fonts, styles) ===== -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; connect-src 'self'; form-action 'self' mailto:; base-uri 'self'; object-src 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; connect-src 'self'; form-action 'self' mailto:; base-uri 'self'; object-src 'none'; require-trusted-types-for 'script'; trusted-types 'none'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Alpine Home Concept · Sculptural tables and mirrors, Belp</title>
   <meta name="description" content="Sculptural coffee tables, dining tables and mirrors, handmade, selected and delivered from Belp, Switzerland.">
   <meta property="og:title" content="Alpine Home Concept">
   <meta property="og:description" content="Sculptural coffee tables, dining tables and mirrors, delivered from Belp.">
-  <meta property="og:image" content="img/site/og-1200.webp">
+  <!-- Social preview needs a full address. After moving to the own domain, replace the address here. -->
+  <meta property="og:image" content="https://ehaberdar.github.io/alpine-home-concept/img/site/og-1200.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
   <meta property="og:type" content="website">
   <meta name="theme-color" content="#ecede8">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -19,7 +23,10 @@
 </head>
 <body data-page="home">
   <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
-  <header id="site-header" class="site-header"></header>
+  <header id="site-header" class="site-header">
+    <!-- Plain links for visitors without JavaScript; app.js replaces this with the real menu -->
+    <noscript><div class="wrap noscript-nav"><a href="index.html">Alpine Home Concept</a><a href="collection.html">Collection</a><a href="custom.html">Made to measure</a><a href="atelier.html">Atelier</a><a href="contact.html">Contact</a><a href="legal.html">Legal notice</a></div></noscript>
+  </header>
 
   <main id="main">
     <!-- ===== HERO: headline + photo; contour lines are drawn by assets/js/topo.js ===== -->
@@ -61,7 +68,7 @@
       <div class="wrap">
         <div class="section-head">
           <h2 id="featured-title" class="h2" data-i18n="home.featured.title">Sculptural pieces</h2>
-          <p data-i18n="home.featured.text">Layers of wood cut one by one, then stacked like a relief map. The glass lets you see the structure.</p>
+          <p data-i18n="home.featured.text">Layers cut one by one, then stacked like a relief map. The glass lets you see the structure.</p>
         </div>
         <div id="featured" class="featured"></div>
         <p class="featured-more"><a class="btn btn-ghost" href="collection.html" data-i18n="home.featured.all">Whole collection</a></p>

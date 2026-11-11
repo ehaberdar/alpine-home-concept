@@ -1,0 +1,23 @@
+# Runs the automatic checks (tests/) after every change to the site.
+# A red cross on a commit means: a product, photo, translation or page is broken.
+# The website itself needs none of this; it only protects against editing mistakes.
+name: Check site
+on:
+  push:
+    branches: [main]
+    paths-ignore: ["data/rates.js", "README.md"]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - name: Install the test tool (jsdom)
+        working-directory: tests
+        run: npm install --no-audit --no-fund --ignore-scripts
+      - name: Data and pages
+        working-directory: tests
+        run: npm test

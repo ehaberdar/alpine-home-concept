@@ -4,7 +4,7 @@
   <!-- ===== HEAD: same block on every page (security, fonts, styles) ===== -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; connect-src 'self'; form-action 'self' mailto:; base-uri 'self'; object-src 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; connect-src 'self'; form-action 'self' mailto:; base-uri 'self'; object-src 'none'; require-trusted-types-for 'script'; trusted-types 'none'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Legal notice · Alpine Home Concept</title>
   <meta name="description" content="Sculptural coffee tables, dining tables and mirrors, handmade, selected and delivered from Belp, Switzerland.">
@@ -16,7 +16,10 @@
 </head>
 <body data-page="legal">
   <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
-  <header id="site-header" class="site-header"></header>
+  <header id="site-header" class="site-header">
+    <!-- Plain links for visitors without JavaScript; app.js replaces this with the real menu -->
+    <noscript><div class="wrap noscript-nav"><a href="index.html">Alpine Home Concept</a><a href="collection.html">Collection</a><a href="custom.html">Made to measure</a><a href="atelier.html">Atelier</a><a href="contact.html">Contact</a><a href="legal.html">Legal notice</a></div></noscript>
+  </header>
 
   <main id="main">
     <div class="wrap page-head">
@@ -30,12 +33,12 @@
         <!-- ===== PRIVACY ===== -->
         <h2 class="h3" data-i18n="legal.privacy">Privacy</h2>
         <p data-i18n="legal.privacy.1">This site uses no cookies, no analytics and no advertising. Fonts are hosted on this site: no data is sent to Google or any other third party when you visit.</p>
-        <p data-i18n="legal.privacy.2">Your language choice is saved in your browser (local storage) and never leaves your device.</p>
-        <p data-i18n="legal.privacy.3">The host (GitHub Pages) keeps technical logs, including IP addresses, for the security of the service.</p>
+        <p data-i18n="legal.privacy.2">Your language and currency choices are saved in your browser (local storage) and never leave your device.</p>
+        <p data-i18n="legal.privacy.3">The host (GitHub Pages, GitHub Inc., USA) keeps technical logs, including IP addresses, for the security of the service.</p>
         <p data-i18n="legal.privacy.4">Forms send nothing to this site: they open your email app. We use your details only to answer your request, under the Swiss Federal Act on Data Protection (FADP).</p>
         <!-- ===== TERMS OF SALE ===== -->
         <h2 class="h3" data-i18n="legal.terms">Terms of sale</h2>
-        <p data-i18n="legal.terms.1">Prices are in Swiss francs. An order can be cancelled free of charge within 24 hours.</p>
+        <p data-i18n="legal.terms.1">Prices are set in Swiss francs; amounts in US dollars and euros are converted at the daily ECB reference rate and are indicative. An order can be cancelled free of charge within 24 hours.</p>
         <p data-i18n="legal.terms.2">Returns accepted within 14 days of delivery, new, unassembled and in the original packaging. Return shipping is paid by the customer.</p>
         <p data-i18n="legal.terms.3">Damaged or faulty item: report it within 3 days with photos. We replace or refund at no cost.</p>
       </div>

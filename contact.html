@@ -4,7 +4,7 @@
   <!-- ===== HEAD: same block on every page (security, fonts, styles) ===== -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; connect-src 'self'; form-action 'self' mailto:; base-uri 'self'; object-src 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; connect-src 'self'; form-action 'self' mailto:; base-uri 'self'; object-src 'none'; require-trusted-types-for 'script'; trusted-types 'none'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Contact · Alpine Home Concept</title>
   <meta name="description" content="Sculptural coffee tables, dining tables and mirrors, handmade, selected and delivered from Belp, Switzerland.">
@@ -15,7 +15,10 @@
 </head>
 <body data-page="contact">
   <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
-  <header id="site-header" class="site-header"></header>
+  <header id="site-header" class="site-header">
+    <!-- Plain links for visitors without JavaScript; app.js replaces this with the real menu -->
+    <noscript><div class="wrap noscript-nav"><a href="index.html">Alpine Home Concept</a><a href="collection.html">Collection</a><a href="custom.html">Made to measure</a><a href="atelier.html">Atelier</a><a href="contact.html">Contact</a><a href="legal.html">Legal notice</a></div></noscript>
+  </header>
 
   <main id="main">
     <div class="wrap page-head">
