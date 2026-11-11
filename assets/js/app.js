@@ -27,6 +27,25 @@
   var COLORS = window.AHC_COLORS || {};
   var RATES = window.AHC_RATES || { rates: { EUR: 1, CHF: 1 } };
   var CATEGORIES = ["sculptural", "coffee-nesting", "side", "dining", "mirrors", "accessories"];
+  // Prices from the Google Sheet (data/prices.js) override products.js.
+  // Only plain positive whole numbers are accepted; anything else is ignored.
+  (function applySheetPrices() {
+    var items = (window.AHC_PRICES && window.AHC_PRICES.items) || {};
+    function num(v) { return typeof v === "number" && isFinite(v) && v > 0 ? Math.round(v) : null; }
+    PRODUCTS.forEach(function (p) {
+      var list = Object.prototype.hasOwnProperty.call(items, p.id) ? items[p.id] : null;
+      if (!Array.isArray(list)) return;
+      p.variants.forEach(function (v, i) {
+        var e = list[i];
+        if (!e || typeof e !== "object") return;   // row missing in sheet: keep products.js
+        v.price = num(e.chf);                        // empty = price on request
+        var fixed = {};
+        if (num(e.usd)) fixed.USD = num(e.usd);
+        if (num(e.eur)) fixed.EUR = num(e.eur);
+        if (fixed.USD || fixed.EUR) v.prices = fixed; else delete v.prices;
+      });
+    });
+  })();
   var page = document.body.getAttribute("data-page");
   var lang = CONFIG.defaultLang;
   var currency = CONFIG.defaultCurrency;

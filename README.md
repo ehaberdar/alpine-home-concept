@@ -8,7 +8,8 @@ no cookies, no tracking.
 
 | You want to… | Edit this file |
 |---|---|
-| change a price, add or remove a product | `data/products.js` |
+| change a price | the Google Sheet (see Prices below) |
+| add or remove a product, texts, sizes | `data/products.js` |
 | change a text (any language) | `assets/js/i18n.js` |
 | change e-mail, Instagram, Etsy links, Impressum data, languages, currencies | `data/config.js` |
 | change colours, fonts, spacing | top of `assets/css/main.css` (section 2, TOKENS) |
@@ -42,6 +43,32 @@ assets/js/          app.js (site logic), i18n.js (texts), topo.js (hero contours
 assets/fonts/       Archivo variable font, self-hosted (OFL licence)
 img/                optimised WebP photos
 ```
+
+## Prices (Google Sheet)
+
+Prices are edited in the Google Sheet **"Alpine Home Concept – Fiyatlar / Preise"**
+(Drive folder 20.AlpineHome). One row per variant:
+
+| column | meaning |
+|---|---|
+| `product_id`, `variant_no` | do not change: they link the row to the product |
+| `product`, `category`, `variant`, `dims` | for reading only |
+| `price_chf` | the price. Empty = "price on request" |
+| `price_usd`, `price_eur` | optional fixed prices; empty = converted from CHF |
+
+Every hour the **Update prices** Action (`.github/workflows/update-prices.yml`,
+`scripts/update_prices.py`) downloads the sheet, checks it and writes `data/prices.js`.
+To publish at once: GitHub → Actions → Update prices → Run workflow. The site shows the change
+about a minute later.
+
+Checks before anything is published: unknown product or variant numbers, text in a price
+field, prices outside 1–100000, duplicate rows, or more than half the prices suddenly empty.
+Any of these stops the run (red in the Actions tab, with the row number) and the site keeps
+the last good prices. Writing `1'250`, `1,250` or `CHF 1250` is fine.
+
+The sheet must be shared as *Anyone with the link: Viewer* so the Action can read it (prices
+are public on the site anyway). Give Cihan editor access with his own Google account.
+A row missing from the sheet falls back to the price in `products.js`.
 
 ## Currencies
 

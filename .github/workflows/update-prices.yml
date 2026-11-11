@@ -1,0 +1,35 @@
+# Copies prices from the shared Google Sheet into data/prices.js.
+# Runs every hour and on demand (Actions tab -> Update prices -> Run workflow).
+# If the sheet has an error the run fails and nothing on the site changes.
+name: Update prices
+on:
+  schedule:
+    - cron: "23 * * * *"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: data-bot
+  cancel-in-progress: false
+env:
+  # The Google Sheet "Alpine Home Concept – Fiyatlar / Preise"
+  PRICE_SHEET_ID: 1H5Ld_GGUIB8U0mLD-VziU2gO4d4xcR0tCAPlTfWqB-8
+jobs:
+  prices:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python scripts/update_prices.py
+      - name: Commit if the prices changed
+        run: |
+          git add -N data/prices.js 2>/dev/null || true
+          if git diff --quiet -- data/prices.js; then echo "No change"; exit 0; fi
+          git config user.name "prices-bot"
+          git config user.email "prices-bot@users.noreply.github.com"
+          git add data/prices.js
+          git commit -m "Update prices from sheet"
+          git pull --rebase
+          git push
